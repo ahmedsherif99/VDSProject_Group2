@@ -4,7 +4,7 @@ name: CMake on a single platform
 
 on:
   push:
-    branches: [ "first-dummy-test" ]
+    branches: [ "workflow-test", "master" ]
   pull_request:
     branches: [ "master" ]
 
