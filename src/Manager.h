@@ -9,6 +9,15 @@
 
 namespace ClassProject {
 
+    class Manager : public ManagerInterface {
+
+    public:
+        Manager();
+        BDD_ID createVar(const std::string &label) override;
+    };
+
+    int table[20];
 }
+
 
 #endif
