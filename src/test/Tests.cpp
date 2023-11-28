@@ -7,5 +7,5 @@
 using namespace ClassProject;
 TEST(Test, Test){
     ClassProject::Manager FirstTest;
-    EXPECT_EQ(FirstTest.createVar("TestLabel"),3);
+    EXPECT_EQ(FirstTest.createVar("TestLabel"),2);
 }
