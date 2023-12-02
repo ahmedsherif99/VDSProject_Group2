@@ -1,0 +1,20 @@
+# ninja log v5
+1478	4154	1701527304057001000	src/test/CMakeFiles/VDSProject_test.dir/Tests.cpp.o	8e6ea7c27a595626
+7871	9468	1701202271926093923	/home/ahmed/Desktop/VDS Project/VDSProject_Group2/gtest/googletest-build/googletest/CMakeFiles/gtest_main.dir/src/gtest_main.cc.o	2102ddd9bf39e6f6
+7751	7871	1701202270326093923	lib/libgtest.a	bd897d7ec9f01801
+3	940	1701527886905001000	src/CMakeFiles/Manager.dir/Manager.cpp.o	616189efe5d79517
+950	1531	1701527887489001000	src/test/VDSProject_test	c1c9c7a819689176
+0	1201	1701033372174522892	CMakeFiles/VDSProject.dir/src/main.cpp.o	e9f370a8d81d74ad
+1923	2239	1701033373207038892	VDSProject	4904afe525142403
+940	950	1701527886917001000	src/libManager.a	2dcc5326e607f3dd
+1715	4662	1701519416114000000	src/test/CMakeFiles/VDSProject_test.dir/main_test.cpp.o	f5e4ba78bc98671d
+9469	9476	1701202271934093923	lib/libgtest_main.a	afa14bbdf78c9411
+3	7746	1701202270198093923	/home/ahmed/Desktop/VDS Project/VDSProject_Group2/gtest/googletest-build/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.o	d2d6a212e97a056d
+7	2952	1701528023609001000	src/CMakeFiles/Manager.dir/Manager.cpp.o	616189efe5d79517
+2952	3068	1701528023729001000	src/libManager.a	2dcc5326e607f3dd
+3068	6726	1701528027385001000	src/test/CMakeFiles/VDSProject_test.dir/main_test.cpp.o	f5e4ba78bc98671d
+6726	9784	1701528030445001000	src/test/CMakeFiles/VDSProject_test.dir/Tests.cpp.o	8e6ea7c27a595626
+9784	10440	1701528031097001000	src/test/VDSProject_test	c1c9c7a819689176
+2	1087	1701528095153001000	src/CMakeFiles/Manager.dir/Manager.cpp.o	616189efe5d79517
+1089	1109	1701528095177001000	src/libManager.a	2dcc5326e607f3dd
+1109	1592	1701528095657001000	src/test/VDSProject_test	c1c9c7a819689176
