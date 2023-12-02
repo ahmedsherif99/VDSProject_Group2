@@ -1,1 +1,3 @@
-
+gtest/
+.idea/
+cmake-build-debug-wsl/
