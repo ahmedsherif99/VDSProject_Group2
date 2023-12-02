@@ -37,6 +37,7 @@ jobs:
         # Execute tests defined by the CMake configuration.
         # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
         run: make VDSProject_test && src/test/VDSProject_test
+<<<<<<< HEAD
 =======
     - uses: actions/checkout@v3
 
@@ -56,3 +57,5 @@ jobs:
       run: make VDSProject_test && src/test/VDSProject_test
 
 >>>>>>> first-dummy-test
+=======
+>>>>>>> 3d8e5fbb8b5823deb169fec84469e94d60a344bf

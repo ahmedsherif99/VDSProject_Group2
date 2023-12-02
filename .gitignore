@@ -2,7 +2,10 @@ gtest/
 <<<<<<< HEAD
 .idea/
 cmake-build-debug-wsl/
+<<<<<<< HEAD
 =======
 cmake-build-debug-wsl/
 .idea/
 >>>>>>> first-dummy-test
+=======
+>>>>>>> 3d8e5fbb8b5823deb169fec84469e94d60a344bf
