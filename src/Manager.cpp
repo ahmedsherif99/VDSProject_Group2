@@ -46,5 +46,5 @@ BDD_ID Manager::topVar(BDD_ID f){
     return unique_table[f].topvariable;
 }
 size_t Manager::uniqueTableSize(){
-
+    return unique_table.size();
 }
