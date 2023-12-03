@@ -35,5 +35,10 @@ bool Manager::isConstant(BDD_ID f){
     }
 }
 bool Manager::isVariable(BDD_ID x){
-
+    if (unique_table[x-1].high == 2 && unique_table[x-1].low == 1) {
+        return true;
+    }
+    else {
+        return false;
+    }
 }
