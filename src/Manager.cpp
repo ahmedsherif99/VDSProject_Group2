@@ -34,3 +34,6 @@ bool Manager::isConstant(BDD_ID f){
         return false;
     }
 }
+bool Manager::isVariable(BDD_ID x){
+
+}

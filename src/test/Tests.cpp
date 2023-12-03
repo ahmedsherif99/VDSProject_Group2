@@ -29,3 +29,10 @@ TEST(Interfacefunctionstests, constant_functest ){
     EXPECT_EQ(constant_test.isConstant(constant_test.False()),true);
     EXPECT_EQ(constant_test.isConstant(a),false);
 }
+TEST(Interfacefunctionstests, variable_functiontest){
+    Manager variable_test;
+    BDD_ID a = variable_test.createVar("a");
+    EXPECT_EQ(variable_test.isVariable(variable_test.True()),false);
+    EXPECT_EQ(variable_test.isVariable(variable_test.False()),false);
+    EXPECT_EQ(variable_test.isVariable(a),true);
+}
