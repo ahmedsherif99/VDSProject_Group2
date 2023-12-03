@@ -25,3 +25,7 @@ const BDD_ID&  Manager::False() {
 const BDD_ID & Manager::True(){
     return unique_table[1].id;
 }
+
+bool Manager::isConstant(BDD_ID f){
+
+}
