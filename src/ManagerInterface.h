@@ -25,6 +25,8 @@ namespace ClassProject {
         virtual bool isVariable(BDD_ID x) = 0;
 
         virtual BDD_ID topVar(BDD_ID f) = 0;
+
+        virtual size_t uniqueTableSize() = 0;
         /*
              virtual BDD_ID ite(BDD_ID i, BDD_ID t, BDD_ID e) = 0;
 
@@ -56,7 +58,7 @@ namespace ClassProject {
 
              virtual void findVars(const BDD_ID &root, std::set<BDD_ID> &vars_of_root) = 0;
 
-             virtual size_t uniqueTableSize() = 0;
+
 
              virtual void visualizeBDD(std::string filepath, BDD_ID &root) = 0;
               */

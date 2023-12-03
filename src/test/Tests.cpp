@@ -36,3 +36,8 @@ TEST_F(Manager_test, topvariabletest){
     BDD_ID a = test_var->createVar("a");
     EXPECT_EQ(test_var->topVar(a),a);
 }
+TEST_F(Manager_test,uniquetablesizetest){
+    EXPECT_EQ(test_var->uniqueTableSize(),2);
+    test_var->createVar("a");
+    EXPECT_EQ(test_var->uniqueTableSize(),3);
+}
