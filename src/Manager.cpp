@@ -7,15 +7,15 @@ using namespace std;
 using namespace ClassProject;
 
 Manager::Manager() {
-    unique_table_attr false_row = {1,0,0,0,"False"};
-    unique_table_attr true_row = {2,0,0,0,"True"};
+    unique_table_attr false_row = {0,0,0,0,"False"};
+    unique_table_attr true_row = {1,1,1,1,"True"};
     unique_table.push_back(false_row);
     unique_table.push_back(true_row);
     cout << "Constructor Instantiated" <<endl;
 }
 
 BDD_ID Manager::createVar(const std::string &label) {
-    unique_table_attr new_variable = {(unique_table.size()+1),(unique_table.size()+1),1,2,label};
+    unique_table_attr new_variable = {(unique_table.size()),(unique_table.size()),0,1,label};
     unique_table.push_back(new_variable);
     return unique_table[unique_table.size()-1].id;
 }
@@ -35,7 +35,7 @@ bool Manager::isConstant(BDD_ID f){
     }
 }
 bool Manager::isVariable(BDD_ID x){
-    if (unique_table[x-1].high == 2 && unique_table[x-1].low == 1) {
+    if (unique_table[x].high == 1 && unique_table[x].low == 0) {
         return true;
     }
     else {
@@ -43,5 +43,5 @@ bool Manager::isVariable(BDD_ID x){
     }
 }
 BDD_ID Manager::topVar(BDD_ID f){
-    return unique_table[f-1].topvariable;
+    return unique_table[f].topvariable;
 }
