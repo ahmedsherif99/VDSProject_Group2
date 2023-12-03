@@ -42,3 +42,7 @@ bool Manager::isVariable(BDD_ID x){
         return false;
     }
 }
+BDD_ID Manager::topVar(BDD_ID f){
+
+
+}

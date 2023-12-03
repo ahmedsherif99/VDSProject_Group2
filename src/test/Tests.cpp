@@ -36,3 +36,8 @@ TEST(Interfacefunctionstests, variable_functiontest){
     EXPECT_EQ(variable_test.isVariable(variable_test.False()),false);
     EXPECT_EQ(variable_test.isVariable(a),true);
 }
+TEST(Interfacefunctionstests, topvariabletest){
+    Manager topvar_test;
+    BDD_ID a = topvar_test.createVar("a");
+    EXPECT_EQ(topvar_test.topVar(a),a);
+}
