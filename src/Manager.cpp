@@ -27,5 +27,10 @@ const BDD_ID & Manager::True(){
 }
 
 bool Manager::isConstant(BDD_ID f){
-
+    if (f == unique_table[0].id || f == unique_table[1].id) {
+        return true;
+    }
+    else {
+        return false;
+    }
 }
