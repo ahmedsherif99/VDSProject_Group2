@@ -39,7 +39,7 @@ TEST_F(Manager_test, topvariabletest){
 TEST_F(Manager_test,itetest){
     BDD_ID a = test_var->createVar("a");
     BDD_ID b = test_var->createVar("b");
-    
+
     //Test Terminal Cases
     EXPECT_EQ(test_var->ite(test_var->True(),a,b),a);
     EXPECT_EQ(test_var->ite(test_var->False(),a,b),b);

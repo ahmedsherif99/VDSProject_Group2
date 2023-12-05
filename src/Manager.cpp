@@ -47,7 +47,22 @@ BDD_ID Manager::topVar(BDD_ID f){
 }
 
 BDD_ID Manager::ite(BDD_ID i, BDD_ID t, BDD_ID e){
-
+    // Terminal cases
+    if (i==unique_table[1].id){ //this is the true node
+        return t;
+    }
+    else if (i==unique_table[0].id){ //this is the false node
+        return e;
+    }
+    else if (t == unique_table[1].id && e == unique_table[0].id){
+        return i;
+    }
+    else if (t==e){
+        return t;
+    }
+    else if(t == unique_table[0].id && e == unique_table[1].id){
+        //return neg(i); find a way to implement this
+    }
 }
 
 size_t Manager::uniqueTableSize(){
