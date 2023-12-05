@@ -28,6 +28,7 @@ namespace ClassProject {
         bool isConstant(BDD_ID f) override;
         bool isVariable(BDD_ID x) override;
         BDD_ID topVar(BDD_ID f) override;
+        BDD_ID ite(BDD_ID i, BDD_ID t, BDD_ID e) override;
         size_t uniqueTableSize() override;
     };
 

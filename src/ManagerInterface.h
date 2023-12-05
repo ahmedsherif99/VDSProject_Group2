@@ -26,9 +26,12 @@ namespace ClassProject {
 
         virtual BDD_ID topVar(BDD_ID f) = 0;
 
+        virtual BDD_ID ite(BDD_ID i, BDD_ID t, BDD_ID e) = 0;
+
         virtual size_t uniqueTableSize() = 0;
+
+
         /*
-             virtual BDD_ID ite(BDD_ID i, BDD_ID t, BDD_ID e) = 0;
 
              virtual BDD_ID coFactorTrue(BDD_ID f, BDD_ID x) = 0;
 
