@@ -67,24 +67,77 @@ BDD_ID Manager::ite(BDD_ID i, BDD_ID t, BDD_ID e){
         return t;
     }
 
+    // check if it precomputed before
+    auto search_result = computed_table.find({i,t,e});
+    if(search_result != computed_table.end()){
+        return search_result->second;
+    }
 
+    // compute the ite value
+    // find the top variable for ite
+    vector <BDD_ID>topvariable = {topVar(i), topVar(t), topVar(e)};
+    auto min_topvar= topVar(i)+ topVar(t)+ topVar(e);
+    for (int number=0; number<3;number++){
+        if(!isConstant(topvariable[number])){
+            if(topvariable[number]<min_topvar){
+                min_topvar = topvariable[number];
+            }
+        }
+    }
+    auto rhigh = ite(coFactorTrue(i,unique_table[min_topvar].id),coFactorTrue(t,unique_table[min_topvar].id),coFactorTrue(e,unique_table[min_topvar].id));
+    auto rlow = ite(coFactorFalse(i,unique_table[min_topvar].id),coFactorFalse(t,unique_table[min_topvar].id),coFactorFalse(e,unique_table[min_topvar].id));
+    //possible reduction
+    if (rhigh==rlow){
+        return rhigh;
+    }
+    // remove isomorphic graphs
+
+    //find or add to the unique table
+   auto search_r = unique_table_search.find({unique_table[min_topvar].id,rlow,rhigh});
+    if(search_r != computed_table.end()){
+        return search_r->second;
+    }
+    string new_label = "new_node_" + to_string(unique_table.size());
+    unique_table_attr new_node = {unique_table.size(),min_topvar,rlow,rhigh,new_label};
+    key new_node_key = {unique_table[min_topvar].id,rlow,rhigh};
+    unique_table_search.emplace(new_node_key, unique_table.size());
+    unique_table.push_back(new_node);
+    return unique_table[unique_table.size()-1].id;
 }
 
 BDD_ID Manager::coFactorTrue(BDD_ID f, BDD_ID x) {
-
+    if (isConstant(f) || isConstant(x) || topVar(f) > x) {
+        return f;
+    }
+    if (topVar(f) == x) {
+        return unique_table[f].high;
+    } else {
+        auto T = coFactorTrue(unique_table[f].high, x);
+        auto F = coFactorTrue(unique_table[f].low, x);
+        return ite(topVar(f), T, F);
+    }
 }
 BDD_ID Manager::coFactorFalse(BDD_ID f, BDD_ID x){
-
+    if (isConstant(f) || isConstant(x) || topVar(f) > x) {
+        return f;
+    }
+    if (topVar(f) == x) {
+        return unique_table[f].low;
+    } else {
+        auto T = coFactorFalse(unique_table[f].high, x);
+        auto F = coFactorFalse(unique_table[f].low, x);
+        return ite(topVar(f), T, F);
+    }
 }
 BDD_ID Manager::coFactorTrue(BDD_ID f) {
-
+    return unique_table[f].high;
     }
 BDD_ID Manager::coFactorFalse(BDD_ID f) {
-
+    return unique_table[f].low;
 }
 
 size_t Manager::uniqueTableSize(){
-
+    return unique_table.size();
 }
 
 BDD_ID Manager::and2(BDD_ID a, BDD_ID b){
