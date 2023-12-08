@@ -77,40 +77,54 @@ TEST_F(Manager_test,Cofactorfalsewithouttopvartest){
 TEST_F(Manager_test,and2test){
     BDD_ID a = test_var->createVar("a");
     BDD_ID b = test_var->createVar("b");
-    EXPECT_EQ(test_var->and2(a,b),b+1); // new node id after b for a.b
+    EXPECT_EQ(test_var->topVar(test_var->and2(a,b)),a);
+    EXPECT_EQ(test_var->coFactorTrue(test_var->and2(a,b)),b); // rhigh of a.b is b
+    EXPECT_EQ(test_var->coFactorFalse(test_var->and2(a,b)),0); // rlow of a.b is 0
 
 }
 TEST_F(Manager_test,or2test){
     BDD_ID a = test_var->createVar("a");
     BDD_ID b = test_var->createVar("b");
-    EXPECT_EQ(test_var->or2(a,b),b+1); // new node id after b for a+b
+    EXPECT_EQ(test_var->topVar(test_var->or2(a,b)),a);
+    EXPECT_EQ(test_var->coFactorTrue(test_var->or2(a,b)),1); // rhigh of a+b is 1
+    EXPECT_EQ(test_var->coFactorFalse(test_var->or2(a,b)),b); // rlow of a+b is b
 
 }
 TEST_F(Manager_test,xor2test){
     BDD_ID a = test_var->createVar("a");
     BDD_ID b = test_var->createVar("b");
-    EXPECT_EQ(test_var->xor2(a,b),b+2); // 2 new nodes id after b for a^b
+    EXPECT_EQ(test_var->topVar(test_var->xor2(a,b)),a);
+    EXPECT_EQ(test_var->coFactorTrue(test_var->xor2(a,b)),test_var->neg(b)); // rhigh of a^b is !b
+    EXPECT_EQ(test_var->coFactorFalse(test_var->xor2(a,b)),b); // rlow of a^b is b
 }
 TEST_F(Manager_test,negtest){
     BDD_ID a = test_var->createVar("a");
-    EXPECT_EQ(test_var->neg(a),a+1); // new node id after a for neg of a
+    EXPECT_EQ(test_var->coFactorTrue(test_var->neg(a)),0); // neg of rhigh is 0
+    EXPECT_EQ(test_var->coFactorFalse(test_var->neg(a)),1); // neg of rlow is 1
 
 }
 TEST_F(Manager_test,nand2test){
     BDD_ID a = test_var->createVar("a");
     BDD_ID b = test_var->createVar("b");
-    EXPECT_EQ(test_var->nand2(a,b),b+2); // 2 new nodes id after b for !(a.b)
+    EXPECT_EQ(test_var->topVar(test_var->nand2(a,b)),a);
+    EXPECT_EQ(test_var->coFactorTrue(test_var->nand2(a,b)),test_var->neg(b)); // rhigh of !(a.b) is 1
+    EXPECT_EQ(test_var->coFactorFalse(test_var->nand2(a,b)),1); // rlow of !(a.b) is neg(b)
 
 }
 TEST_F(Manager_test,nor2test){
     BDD_ID a = test_var->createVar("a");
     BDD_ID b = test_var->createVar("b");
-    EXPECT_EQ(test_var->nor2(a,b),b+2); // 2 new nodes id after b for !(a+b)
+    EXPECT_EQ(test_var->topVar(test_var->nor2(a,b)),a);
+    EXPECT_EQ(test_var->coFactorTrue(test_var->nor2(a,b)),0); // rhigh of !(a+b) is 0
+    EXPECT_EQ(test_var->coFactorFalse(test_var->nor2(a,b)),test_var->neg(b)); // rlow of !(a+b) is neg(b)
+
 }
 TEST_F(Manager_test,xnor2test){
     BDD_ID a = test_var->createVar("a");
     BDD_ID b = test_var->createVar("b");
-    EXPECT_EQ(test_var->xnor2(a,b),b+3); // 3 new nodes id after b for !(a^b)
+    EXPECT_EQ(test_var->topVar(test_var->xnor2(a,b)),a);
+    EXPECT_EQ(test_var->coFactorTrue(test_var->xnor2(a,b)),b); // rhigh of a^b is !b
+    EXPECT_EQ(test_var->coFactorFalse(test_var->xnor2(a,b)),test_var->neg(b)); // rlow of a^b is b
 }
 TEST_F(Manager_test,uniquetablesizetest){
     EXPECT_EQ(test_var->uniqueTableSize(),2);
