@@ -139,3 +139,19 @@ TEST_F(Manager_test,gettopvariablenametest){
     EXPECT_EQ(test_var->getTopVarName(b),"b");
     EXPECT_EQ(test_var->getTopVarName(y),"a");
 }
+TEST_F(Manager_test,findnodestest){
+    BDD_ID a = test_var->createVar("a");
+    BDD_ID b = test_var->createVar("b");
+    BDD_ID x = test_var->and2(a,b);
+    BDD_ID y = test_var->or2(a,b);
+    set <BDD_ID> node_set;
+    test_var->findNodes(a,node_set);
+    EXPECT_EQ(node_set.size(),3);
+    test_var->findNodes(x,node_set);
+    EXPECT_EQ(node_set.size(),4);
+    test_var->findNodes(y,node_set);
+    EXPECT_EQ(node_set.size(),4);
+}
+TEST_F(Manager_test,findvariablestest){
+
+}
