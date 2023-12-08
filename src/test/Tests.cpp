@@ -153,5 +153,15 @@ TEST_F(Manager_test,findnodestest){
     EXPECT_EQ(node_set.size(),4);
 }
 TEST_F(Manager_test,findvariablestest){
-
+    BDD_ID a = test_var->createVar("a");
+    BDD_ID b = test_var->createVar("b");
+    BDD_ID x = test_var->and2(a,b);
+    BDD_ID y = test_var->or2(a,b);
+    set <BDD_ID> node_set;
+    test_var->findVars(a,node_set);
+    EXPECT_EQ(node_set.size(),1);
+    test_var->findVars(x,node_set);
+    EXPECT_EQ(node_set.size(),2);
+    test_var->findVars(y,node_set);
+    EXPECT_EQ(node_set.size(),2);
 }
