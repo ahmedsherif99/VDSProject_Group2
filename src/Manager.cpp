@@ -141,24 +141,32 @@ size_t Manager::uniqueTableSize(){
 }
 
 BDD_ID Manager::and2(BDD_ID a, BDD_ID b){
-
+    return ite(a,b,0);
 }
 BDD_ID Manager::or2(BDD_ID a, BDD_ID b){
-
+    return ite(a,1,b);
 }
 BDD_ID Manager::xor2(BDD_ID a, BDD_ID b) {
-
+    return ite(a,neg(b),b);
 }
 BDD_ID Manager::neg(BDD_ID a){
-
+    return ite(a,0,1);
 }
 BDD_ID Manager::nand2(BDD_ID a, BDD_ID b){
-
+    return neg(and2(a,b));
 }
 BDD_ID Manager::nor2(BDD_ID a, BDD_ID b){
-
+    return neg(or2(a,b));
 }
 BDD_ID Manager::xnor2(BDD_ID a, BDD_ID b) {
+    return neg(xor2(a,b));
+}
+std::string Manager::getTopVarName(const BDD_ID &root){
 
 }
+void Manager::findNodes(const BDD_ID &root, std::set<BDD_ID> &nodes_of_root) {
 
+}
+void Manager::findVars(const BDD_ID &root, std::set<BDD_ID> &vars_of_root) {
+
+}

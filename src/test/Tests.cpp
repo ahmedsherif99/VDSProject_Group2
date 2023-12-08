@@ -74,8 +74,54 @@ TEST_F(Manager_test,Cofactorfalsewithouttopvartest){
     EXPECT_EQ(test_var->coFactorFalse(test_var->False()),test_var->False()); //constant
     EXPECT_EQ(test_var->coFactorFalse(a),0); //low of a
 }
+TEST_F(Manager_test,and2test){
+    BDD_ID a = test_var->createVar("a");
+    BDD_ID b = test_var->createVar("b");
+    EXPECT_EQ(test_var->and2(a,b),b+1); // new node id after b for a.b
+
+}
+TEST_F(Manager_test,or2test){
+    BDD_ID a = test_var->createVar("a");
+    BDD_ID b = test_var->createVar("b");
+    EXPECT_EQ(test_var->or2(a,b),b+1); // new node id after b for a+b
+
+}
+TEST_F(Manager_test,xor2test){
+    BDD_ID a = test_var->createVar("a");
+    BDD_ID b = test_var->createVar("b");
+    EXPECT_EQ(test_var->xor2(a,b),b+2); // 2 new nodes id after b for a^b
+}
+TEST_F(Manager_test,negtest){
+    BDD_ID a = test_var->createVar("a");
+    EXPECT_EQ(test_var->neg(a),a+1); // new node id after a for neg of a
+
+}
+TEST_F(Manager_test,nand2test){
+    BDD_ID a = test_var->createVar("a");
+    BDD_ID b = test_var->createVar("b");
+    EXPECT_EQ(test_var->nand2(a,b),b+2); // 2 new nodes id after b for !(a.b)
+
+}
+TEST_F(Manager_test,nor2test){
+    BDD_ID a = test_var->createVar("a");
+    BDD_ID b = test_var->createVar("b");
+    EXPECT_EQ(test_var->nor2(a,b),b+2); // 2 new nodes id after b for !(a+b)
+}
+TEST_F(Manager_test,xnor2test){
+    BDD_ID a = test_var->createVar("a");
+    BDD_ID b = test_var->createVar("b");
+    EXPECT_EQ(test_var->xnor2(a,b),b+3); // 3 new nodes id after b for !(a^b)
+}
 TEST_F(Manager_test,uniquetablesizetest){
     EXPECT_EQ(test_var->uniqueTableSize(),2);
     test_var->createVar("a");
     EXPECT_EQ(test_var->uniqueTableSize(),3);
+}
+TEST_F(Manager_test,gettopvariablenametest){
+    BDD_ID a = test_var->createVar("a");
+    BDD_ID b = test_var->createVar("b");
+    BDD_ID y = test_var->and2(a,b);
+    EXPECT_EQ(test_var->getTopVarName(a),"a");
+    EXPECT_EQ(test_var->getTopVarName(b),"b");
+    EXPECT_EQ(test_var->getTopVarName(y),"a");
 }
