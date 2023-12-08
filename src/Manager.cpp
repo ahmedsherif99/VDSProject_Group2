@@ -166,8 +166,18 @@ std::string Manager::getTopVarName(const BDD_ID &root){
     return unique_table[topvarname].label;
 }
 void Manager::findNodes(const BDD_ID &root, std::set<BDD_ID> &nodes_of_root) {
-
+    nodes_of_root.insert(root);
+    if(isConstant(root)){
+        return;
+    }
+    findNodes(coFactorTrue(root),nodes_of_root);
+    findNodes(coFactorFalse(root),nodes_of_root);
 }
 void Manager::findVars(const BDD_ID &root, std::set<BDD_ID> &vars_of_root) {
-
+    if(isConstant(root)){
+        return;
+    }
+    vars_of_root.insert(topVar(root));
+    findVars(coFactorTrue(root),vars_of_root);
+    findVars(coFactorFalse(root),vars_of_root);
 }

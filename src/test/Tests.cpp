@@ -144,24 +144,28 @@ TEST_F(Manager_test,findnodestest){
     BDD_ID b = test_var->createVar("b");
     BDD_ID x = test_var->and2(a,b);
     BDD_ID y = test_var->or2(a,b);
-    set <BDD_ID> node_set;
-    test_var->findNodes(a,node_set);
-    EXPECT_EQ(node_set.size(),3);
-    test_var->findNodes(x,node_set);
-    EXPECT_EQ(node_set.size(),4);
-    test_var->findNodes(y,node_set);
-    EXPECT_EQ(node_set.size(),4);
+    set <BDD_ID> node_set1;
+    set <BDD_ID> node_set2;
+    set <BDD_ID> node_set3;
+    test_var->findNodes(a,node_set1);
+    EXPECT_EQ(node_set1.size(),3);
+    test_var->findNodes(x,node_set2);
+    EXPECT_EQ(node_set2.size(),4);
+    test_var->findNodes(y,node_set3);
+    EXPECT_EQ(node_set3.size(),4);
 }
 TEST_F(Manager_test,findvariablestest){
     BDD_ID a = test_var->createVar("a");
     BDD_ID b = test_var->createVar("b");
     BDD_ID x = test_var->and2(a,b);
     BDD_ID y = test_var->or2(a,b);
-    set <BDD_ID> node_set;
-    test_var->findVars(a,node_set);
-    EXPECT_EQ(node_set.size(),1);
-    test_var->findVars(x,node_set);
-    EXPECT_EQ(node_set.size(),2);
-    test_var->findVars(y,node_set);
-    EXPECT_EQ(node_set.size(),2);
+    set <BDD_ID> node_set1;
+    set <BDD_ID> node_set2;
+    set <BDD_ID> node_set3;
+    test_var->findVars(a,node_set1);
+    EXPECT_EQ(node_set1.size(),1);
+    test_var->findVars(x,node_set2);
+    EXPECT_EQ(node_set2.size(),2);
+    test_var->findVars(y,node_set3);
+    EXPECT_EQ(node_set3.size(),2);
 }
