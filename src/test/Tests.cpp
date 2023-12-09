@@ -189,4 +189,5 @@ TEST_F(Manager_test, Finaltest){
     EXPECT_EQ(test_var->topVar(f),a);
     EXPECT_EQ(test_var->coFactorTrue(f),c_and_d); // rhigh of c.d is d
     EXPECT_EQ(test_var->coFactorFalse(f),c_and_d+1); // rlow of c.d is 0
+    EXPECT_EQ(test_var->uniqueTableSize(),10);
 }
