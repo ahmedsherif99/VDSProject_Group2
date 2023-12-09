@@ -169,3 +169,24 @@ TEST_F(Manager_test,findvariablestest){
     test_var->findVars(y,node_set3);
     EXPECT_EQ(node_set3.size(),2);
 }
+TEST_F(Manager_test, Finaltest){
+    BDD_ID a = test_var->createVar("a");
+    BDD_ID b = test_var->createVar("b");
+    BDD_ID c = test_var->createVar("c");
+    BDD_ID d = test_var->createVar("d");
+    EXPECT_EQ(test_var->uniqueTableSize(),6);
+    auto a_or_b = test_var->or2(a,b);
+    EXPECT_EQ(test_var->topVar(a_or_b),a);
+    EXPECT_EQ(test_var->coFactorTrue(a_or_b),1); // rhigh of a+b is 1
+    EXPECT_EQ(test_var->coFactorFalse(a_or_b),b); // rlow of a+b is b
+    EXPECT_EQ(test_var->uniqueTableSize(),7);
+    auto c_and_d = test_var->and2(c,d);
+    EXPECT_EQ(test_var->topVar(c_and_d),c);
+    EXPECT_EQ(test_var->coFactorTrue(c_and_d),d); // rhigh of c.d is d
+    EXPECT_EQ(test_var->coFactorFalse(c_and_d),0); // rlow of c.d is 0
+    EXPECT_EQ(test_var->uniqueTableSize(),8);
+    auto f = test_var->and2(a_or_b,c_and_d);
+    EXPECT_EQ(test_var->topVar(f),a);
+    EXPECT_EQ(test_var->coFactorTrue(f),c_and_d); // rhigh of c.d is d
+    EXPECT_EQ(test_var->coFactorFalse(f),c_and_d+1); // rlow of c.d is 0
+}
