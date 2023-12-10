@@ -7,8 +7,7 @@
 
 #include "ManagerInterface.h"
 #include <vector>
-#include <map>
-#include <boost/functional/hash.hpp>
+#include <unordered_map>
 #include <algorithm>
 
 namespace ClassProject {
