@@ -58,9 +58,9 @@ namespace ClassProject {
 
         virtual void findVars(const BDD_ID &root, std::set<BDD_ID> &vars_of_root) = 0;
 
-        /*
-                virtual void visualizeBDD(std::string filepath, BDD_ID &root) = 0;
-                 */
+    
+        virtual void visualizeBDD(std::string filepath, BDD_ID &root) = 0;
+                 
     };
 }
 

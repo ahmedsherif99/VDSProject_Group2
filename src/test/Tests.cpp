@@ -185,8 +185,8 @@ TEST_F(Manager_test,restofCoveragetest){
     EXPECT_EQ(test_var->coFactorTrue(y),b); // rhigh of a.b is b
     EXPECT_EQ(test_var->coFactorFalse(y),0); // rlow of a.b is 0
     EXPECT_EQ(test_var->topVar(z),1);
-    EXPECT_EQ(test_var->coFactorTrue(z),1); // rhigh of a.b is b
-    EXPECT_EQ(test_var->coFactorFalse(z),1); // rlow of a.b is 0
+    EXPECT_EQ(test_var->coFactorTrue(z),1); // rhigh of z is 1
+    EXPECT_EQ(test_var->coFactorFalse(z),1); // rlow of z is 1x
 
 }
 

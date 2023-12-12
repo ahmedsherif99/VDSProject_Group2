@@ -1,5 +1,6 @@
 #include "Manager.h"
 #include <iostream>
+#include <fstream>
 
 
 using namespace std;
@@ -97,6 +98,16 @@ BDD_ID Manager::ite(BDD_ID i, BDD_ID t, BDD_ID e){
         return search_r->second;
     }
     string new_label = "new_node_" + to_string(unique_table.size());
+   /* if (e==0){
+        new_label = to_string(i) + " and " + to_string(t);
+    }else if (t==1){
+        new_label = to_string(i) + " or " + to_string(e);
+    }else if (e==1){
+        new_label = to_string(i) + " xor " + to_string(t);
+    }else if (t==0){
+        new_label = to_string(i) + " xnor " + to_string(e);
+    }*/
+
     unique_table_attr new_node = {unique_table.size(),min_topvar,rlow,rhigh,new_label};
     key new_node_key = {unique_table[min_topvar].id,rlow,rhigh};
     unique_table_search.emplace(new_node_key, new_node.id);
@@ -188,4 +199,26 @@ void Manager::findVars(const BDD_ID &root, std::set<BDD_ID> &vars_of_root) {
     vars_of_root.insert(topVar(root));
     findVars(coFactorTrue(root),vars_of_root);
     findVars(coFactorFalse(root),vars_of_root);
+}
+
+void Manager::visualizeBDD(std::string filepath, BDD_ID& root) {
+    std::ofstream file(filepath);
+  file << "strict digraph A {\n";
+  file << "graph [bgcolor=white]\n";
+  file << "node [fillcolor=white, fontname=Arial]\n";
+  visualizeBDDrecursive(file, root);
+  file << "}\n";
+}
+
+void Manager::visualizeBDDrecursive(std::ofstream& file, BDD_ID& root) {
+  auto& node = unique_table[root];
+
+   file << node.id << " [label=\"" << node.label<< "\"]\n" ;
+  if (isConstant(root)) return;
+
+  visualizeBDDrecursive(file, node.low);
+  file << node.id<<" -> "<<node.low<<" [style=dotted]\n";
+
+  visualizeBDDrecursive(file, node.high);
+  file << node.id<<" ->"<<node.high<<" [style=solid]\n";
 }
