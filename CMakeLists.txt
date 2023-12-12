@@ -3,6 +3,19 @@ project(VDSProject CXX C)
 set(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -fPIC -std=c++17 ${LLVM_CXX_FLAGS} ")
 
 
+# Tests
+set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/CMakeModules)
+if(CMAKE_COMPILER_IS_GNUCXX)
+    include(CodeCoverage)
+    append_coverage_compiler_flags()
+    setup_target_for_coverage_lcov(
+        NAME coverage 
+        BASE_DIRECTORY ${PROJECT_SOURCE_DIR}/src
+        EXCLUDE "${PROJECT_SOURCE_DIR}/gtest/*"
+        DEPENDENCIES ${PROJECT_NAME}_test
+        EXECUTABLE ${PROJECT_BINARY_DIR}/src/test/${PROJECT_NAME}_test)
+endif()
+
 # Download and unpack googletest at configure time
 configure_file(CMakeLists.txt.in ${CMAKE_SOURCE_DIR}/gtest/googletest-download/CMakeLists.txt)
 execute_process(COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" .

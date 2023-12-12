@@ -90,17 +90,17 @@ BDD_ID Manager::ite(BDD_ID i, BDD_ID t, BDD_ID e){
     if (rhigh==rlow){
         return rhigh;
     }
-    // remove isomorphic graphs
 
-    //find or add to the unique table
+    // remove isomorphic graphs
    auto search_r = unique_table_search.find({unique_table[min_topvar].id,rlow,rhigh});
-    if(search_r != computed_table.end()){
+    if(search_r != unique_table_search.end()){
         return search_r->second;
     }
     string new_label = "new_node_" + to_string(unique_table.size());
     unique_table_attr new_node = {unique_table.size(),min_topvar,rlow,rhigh,new_label};
     key new_node_key = {unique_table[min_topvar].id,rlow,rhigh};
-    unique_table_search.emplace(new_node_key, unique_table.size());
+    unique_table_search.emplace(new_node_key, new_node.id);
+    computed_table.insert({{i, t, e}, new_node.id});
     unique_table.push_back(new_node);
     return unique_table[unique_table.size()-1].id;
 }
@@ -130,10 +130,18 @@ BDD_ID Manager::coFactorFalse(BDD_ID f, BDD_ID x){
     }
 }
 BDD_ID Manager::coFactorTrue(BDD_ID f) {
+    if (isConstant(f)) {
+        return f;
+    }else{
     return unique_table[f].high;
     }
+    }
 BDD_ID Manager::coFactorFalse(BDD_ID f) {
-    return unique_table[f].low;
+    if (isConstant(f)) {
+        return f;
+    }else{
+        return unique_table[f].low;
+    }
 }
 
 size_t Manager::uniqueTableSize(){

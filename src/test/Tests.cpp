@@ -48,7 +48,6 @@ TEST_F(Manager_test,itetest){
     //Test new node
     EXPECT_EQ(test_var->ite(a,b,0),b+1); // new node id after b
     EXPECT_EQ(test_var->ite(a,1,b),b+2); // new node id after b+1
-    //EXPECT_EQ(test_var->ite(a,test_var->False(),test_var->True()),a);   expect test_var->neg(a)
 }
 TEST_F(Manager_test,Cofactortruetest){
     BDD_ID a = test_var->createVar("a");
@@ -169,6 +168,28 @@ TEST_F(Manager_test,findvariablestest){
     test_var->findVars(y,node_set3);
     EXPECT_EQ(node_set3.size(),2);
 }
+
+
+TEST_F(Manager_test,restofCoveragetest){
+    //this test is to cover the cases of having a value in the pre computed table
+    BDD_ID a = test_var->createVar("a");
+    BDD_ID b = test_var->createVar("b");
+    BDD_ID x = test_var->and2(a,b);
+    BDD_ID y = test_var->and2(a,b);
+    BDD_ID z = test_var->ite(a,1,test_var->neg(a));
+    EXPECT_EQ(test_var->topVar(x),a);
+    EXPECT_EQ(test_var->coFactorTrue(x),b); // rhigh of a.b is b
+    EXPECT_EQ(test_var->coFactorFalse(x),0); // rlow of a.b is 0
+    EXPECT_EQ(test_var->topVar(y),a);
+    EXPECT_EQ(y,x);
+    EXPECT_EQ(test_var->coFactorTrue(y),b); // rhigh of a.b is b
+    EXPECT_EQ(test_var->coFactorFalse(y),0); // rlow of a.b is 0
+    EXPECT_EQ(test_var->topVar(z),1);
+    EXPECT_EQ(test_var->coFactorTrue(z),1); // rhigh of a.b is b
+    EXPECT_EQ(test_var->coFactorFalse(z),1); // rlow of a.b is 0
+
+}
+
 TEST_F(Manager_test, Finaltest){
     BDD_ID a = test_var->createVar("a");
     BDD_ID b = test_var->createVar("b");
