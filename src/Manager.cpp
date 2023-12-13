@@ -97,8 +97,8 @@ BDD_ID Manager::ite(BDD_ID i, BDD_ID t, BDD_ID e){
     if(search_r != unique_table_search.end()){
         return search_r->second;
     }
-    string new_label = "new_node_" + to_string(unique_table.size());
-   /* if (e==0){
+    string new_label;// = "new_node_" + to_string(unique_table.size());
+    /*if (e==0){
         new_label = to_string(i) + " and " + to_string(t);
     }else if (t==1){
         new_label = to_string(i) + " or " + to_string(e);
@@ -107,6 +107,15 @@ BDD_ID Manager::ite(BDD_ID i, BDD_ID t, BDD_ID e){
     }else if (t==0){
         new_label = to_string(i) + " xnor " + to_string(e);
     }*/
+        if (e==0){
+        new_label = "(" + unique_table[i].label + " . " + unique_table[t].label + ")";
+    }else if (t==1){
+        new_label = "(" + unique_table[i].label + " + " + unique_table[e].label+ ")";
+    }else if (e==1){
+        new_label = "(" + unique_table[i].label + " ^ " + unique_table[t].label+ ")";
+    }else if (t==0){
+        new_label = "(" + unique_table[i].label + " xnor " + unique_table[e].label + ")";
+    }
 
     unique_table_attr new_node = {unique_table.size(),min_topvar,rlow,rhigh,new_label};
     key new_node_key = {unique_table[min_topvar].id,rlow,rhigh};
