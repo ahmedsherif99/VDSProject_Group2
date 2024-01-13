@@ -34,7 +34,7 @@ const BDD_ID & Manager::True(){
 }
 
 bool Manager::isConstant(BDD_ID f){
-    if (f == unique_table[0].id || f == unique_table[1].id) {
+    if (f == Manager::False() || f == Manager::True()) {
         return true;
     }
     else {
@@ -42,7 +42,7 @@ bool Manager::isConstant(BDD_ID f){
     }
 }
 bool Manager::isVariable(BDD_ID x){
-    if (unique_table[x].high == 1 && unique_table[x].low == 0) {
+    if (unique_table[x].high == Manager::True() && unique_table[x].low == Manager::False()) {
         return true;
     }
     else {
@@ -53,51 +53,50 @@ BDD_ID Manager::topVar(BDD_ID f){
     return unique_table[f].topvariable;
 }
 
-BDD_ID Manager::ite(BDD_ID i, BDD_ID t, BDD_ID e){
+BDD_ID Manager::ite(BDD_ID i, BDD_ID t, BDD_ID e) {
     // Terminal cases
-    if (i==unique_table[1].id){ //this is the true node
+    if (i == Manager::True()) { //this is the true node
         return t;
-    }
-    else if (i==unique_table[0].id){ //this is the false node
+    } else if (i == Manager::False()) { //this is the false node
         return e;
-    }
-    else if (t == unique_table[1].id && e == unique_table[0].id){
+    } else if (t == Manager::True() && e == Manager::False()) {
         return i;
-    }
-    else if (t==e){
+    } else if (t == e) {
         return t;
     }
 
     // check if it precomputed before
-    auto search_result = computed_table.find({i,t,e});
-    if(search_result != computed_table.end()){
+    auto search_result = computed_table.find({i, t, e});
+    if (search_result != computed_table.end()) {
         return search_result->second;
     }
 
     // compute the ite value
     // find the top variable for ite
-    vector <BDD_ID>topvariable = {topVar(i), topVar(t), topVar(e)};
-    auto min_topvar= topVar(i)+ topVar(t)+ topVar(e);
-    for (int number=0; number<3;number++){
-        if(!isConstant(topvariable[number])){
-            if(topvariable[number]<min_topvar){
+    vector<BDD_ID> topvariable = {topVar(i), topVar(t), topVar(e)};
+    auto min_topvar = topVar(i) + topVar(t) + topVar(e);
+    for (int number = 0; number < 3; number++) {
+        if (!isConstant(topvariable[number])) {
+            if (topvariable[number] < min_topvar) {
                 min_topvar = topvariable[number];
             }
         }
     }
-    auto rhigh = ite(coFactorTrue(i,unique_table[min_topvar].id),coFactorTrue(t,unique_table[min_topvar].id),coFactorTrue(e,unique_table[min_topvar].id));
-    auto rlow = ite(coFactorFalse(i,unique_table[min_topvar].id),coFactorFalse(t,unique_table[min_topvar].id),coFactorFalse(e,unique_table[min_topvar].id));
+    auto rhigh = ite(coFactorTrue(i, unique_table[min_topvar].id), coFactorTrue(t, unique_table[min_topvar].id),
+                     coFactorTrue(e, unique_table[min_topvar].id));
+    auto rlow = ite(coFactorFalse(i, unique_table[min_topvar].id), coFactorFalse(t, unique_table[min_topvar].id),
+                    coFactorFalse(e, unique_table[min_topvar].id));
     //possible reduction
-    if (rhigh==rlow){
+    if (rhigh == rlow) {
         return rhigh;
     }
 
     // remove isomorphic graphs
-   auto search_r = unique_table_search.find({unique_table[min_topvar].id,rlow,rhigh});
-    if(search_r != unique_table_search.end()){
+    auto search_r = unique_table_search.find({unique_table[min_topvar].id, rlow, rhigh});
+    if (search_r != unique_table_search.end()) {
         return search_r->second;
     }
-    string new_label;// = "new_node_" + to_string(unique_table.size());
+    string new_label = to_string(unique_table.size());
     /*if (e==0){
         new_label = to_string(i) + " and " + to_string(t);
     }else if (t==1){
@@ -107,6 +106,7 @@ BDD_ID Manager::ite(BDD_ID i, BDD_ID t, BDD_ID e){
     }else if (t==0){
         new_label = to_string(i) + " xnor " + to_string(e);
     }*/
+    /*
         if (e==0){
         new_label = "(" + unique_table[i].label + " . " + unique_table[t].label + ")";
     }else if (t==1){
@@ -116,7 +116,7 @@ BDD_ID Manager::ite(BDD_ID i, BDD_ID t, BDD_ID e){
     }else if (t==0){
         new_label = "(" + unique_table[i].label + " xnor " + unique_table[e].label + ")";
     }
-
+    */
     unique_table_attr new_node = {unique_table.size(),min_topvar,rlow,rhigh,new_label};
     key new_node_key = {unique_table[min_topvar].id,rlow,rhigh};
     unique_table_search.emplace(new_node_key, new_node.id);
