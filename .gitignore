@@ -6,4 +6,3 @@ cmake-build-release-wsl/
 .vscode/
 build/
 results/
-benchmarks/
