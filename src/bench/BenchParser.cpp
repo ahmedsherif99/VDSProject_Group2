@@ -49,7 +49,7 @@ void BenchParser::PrintLabelsTable() {
         std::cout << "\tNode Label: " << it_label->second.label << std::endl;
         std::cout << "\tGate Type: " << it_label->second.gate_type << std::endl;
         std::cout << "\tInputs: ";
-        for (const auto &i : it_label->second.input_node_list)
+        for (const auto &i: it_label->second.input_node_list)
             std::cout << i << ' ';
         std::cout << std::endl << "-----" << std::endl;
     }
@@ -67,11 +67,11 @@ void BenchParser::PrintUUIDCircuitTable() {
         std::cout << "\tNode Circuit Label: " << it_uuid->second.label << std::endl;
         std::cout << "\tGate Type: " << it_uuid->second.gate_type << std::endl;
         std::cout << "\tInputs: ";
-        for (unsigned long i : it_uuid->second.input_id_list)
+        for (unsigned long i: it_uuid->second.input_id_list)
             std::cout << i << ' ';
         std::cout << std::endl << "-----" << std::endl;
         std::cout << "\tOutputs: ";
-        for (unsigned long i : it_uuid->second.output_id_list)
+        for (unsigned long i: it_uuid->second.output_id_list)
             std::cout << i << ' ';
         std::cout << std::endl << "-----" << std::endl;
     }
@@ -115,16 +115,16 @@ void BenchParser::PrintCircuit(unique_ID_t circuit_ID, int indent) {
         std::cout << std::string(indent, ' ') << "Type: " << node.gate_type << std::endl;
 
         std::cout << std::string(indent, ' ') << "Input List: " << std::endl;
-        for (unsigned long i : node.input_id_list)
+        for (unsigned long i: node.input_id_list)
             std::cout << std::string(indent, ' ') << "    " << i << std::endl;
 
         std::cout << std::string(indent, ' ') << "Output List: " << std::endl;
-        for (unsigned long i : node.output_id_list)
+        for (unsigned long i: node.output_id_list)
             std::cout << std::string(indent, ' ') << "    " << i << std::endl;
 
         indent = indent + 4;
         std::cout << std::string(indent, ' ') << "--------------" << std::endl;
-        for (unsigned long i : node.input_id_list)
+        for (unsigned long i: node.input_id_list)
             PrintCircuit(i, indent);
         std::cout << std::string(indent, ' ') << "--------------" << std::endl;
     }
@@ -144,7 +144,7 @@ void BenchParser::PrintCircuitByLabel(const label_t &node_label) {
 
 
 void BenchParser::PrintCircuitsOfOutputSet() {
-    for (unsigned long it : output_circuits) {
+    for (unsigned long it: output_circuits) {
         PrintCircuit(it, 0);
     }
 }
@@ -372,7 +372,7 @@ circuit_node_t BenchParser::benchNodeToCircuitNode(const bench_node_t &bench_nod
 
         } else {
 
-            for (const auto &input_node : bench_node.input_node_list) {
+            for (const auto &input_node: bench_node.input_node_list) {
 
                 input_id = findOrAddToCircuitByLabel(input_node);
                 new_circuit_node.input_id_list.insert(input_id);
@@ -397,13 +397,13 @@ void BenchParser::createCircuitFromOutputList() {
     std::unordered_map<label_t, unique_ID_t>::const_iterator got_uid;
     std::unordered_map<unique_ID_t, circuit_node_t>::const_iterator got_node;
 
-    for (const auto &output_label : output_labels) {
+    for (const auto &output_label: output_labels) {
         createCircuitByLabel(output_label + OUTPUT_GATE_T);
     }
-    for (const auto &ff_label : ff_labels) {
+    for (const auto &ff_label: ff_labels) {
         createCircuitByLabel(ff_label + FLIP_FLOP_GATE_T);
     }
-    for (const auto &ff_label : ff_labels) {
+    for (const auto &ff_label: ff_labels) {
         auto ff_id = labels_to_id.find(ff_label + FLIP_FLOP_GATE_T);
         auto ff_node = id_to_circuit_node.find(ff_id->second);
         ff_node = id_to_circuit_node.find(*(ff_node->second).input_id_list.begin());

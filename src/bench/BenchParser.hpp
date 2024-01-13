@@ -139,7 +139,7 @@ private:
      * \return none
      *
      */
-    void PrintCircuitByLabel(const label_t& node_label);
+    void PrintCircuitByLabel(const label_t &node_label);
 
     /**
      * \brief prints all circuits from the set of circuit OUTPUTS.
@@ -204,7 +204,7 @@ private:
      *
      *  Reads the file containing the circuit in the bench format.
      */
-    bool parseFile(const std::string& bench_file);
+    bool parseFile(const std::string &bench_file);
 
     /* ----------------
      * Insert functions
@@ -234,7 +234,7 @@ private:
      *  Otherwise, simply return the unique ID of the node.
      *
      */
-    unique_ID_t findOrAddToCircuit(const bench_node_t& bench_node);
+    unique_ID_t findOrAddToCircuit(const bench_node_t &bench_node);
 
     /**
      * \brief find or add a node to the circuit given its label.
@@ -247,7 +247,7 @@ private:
      *      and add it to the table.
      *
      */
-    unique_ID_t findOrAddToCircuitByLabel(const label_t& node_label);
+    unique_ID_t findOrAddToCircuitByLabel(const label_t &node_label);
 
     /* --------------------
      * Conversion functions
@@ -261,7 +261,7 @@ private:
      *
      *  Given a bench_node_t, it converts the node into an circuit_node_type.
      */
-    circuit_node_t benchNodeToCircuitNode(const bench_node_t& bench_node);
+    circuit_node_t benchNodeToCircuitNode(const bench_node_t &bench_node);
 
     /*
      *
@@ -283,7 +283,7 @@ private:
      * \return none
      *
      */
-    void createCircuitByLabel(const label_t& bnode_label);
+    void createCircuitByLabel(const label_t &bnode_label);
 
     /* -----------------------------
      * Topological Sort Algorithms
@@ -324,7 +324,7 @@ public:
     * generates the topological circuit described in the file
     * bench_file that must be in the ISCAS85/ISCAS89/ISCAS99 format.
     */
-    explicit BenchParser(const std::string& bench_file);
+    explicit BenchParser(const std::string &bench_file);
 
     ~BenchParser();
 

@@ -59,6 +59,6 @@ int memReadStats(int field);
 
 long long memUsing();
 
-void process_mem_usage(double& vm_usage, double& resident_set);
+void process_mem_usage(double &vm_usage, double &resident_set);
 
 #endif /* BENCHMARKLIB_H_ */

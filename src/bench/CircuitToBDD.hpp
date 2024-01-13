@@ -27,6 +27,7 @@ class CircuitToBDD {
 public:
 
     explicit CircuitToBDD(shared_ptr<ClassProject::ManagerInterface> BDD_manager_p);
+
     ~CircuitToBDD();
 
     /**
@@ -37,7 +38,7 @@ public:
      *  Generates the calls to the BDD package in order to
      *   generate the BDD equivalent to the provided circuit.
      */
-    void GenerateBDD(const std::list<circuit_node_t> &circuit, const std::string& benchmark_file);
+    void GenerateBDD(const std::list<circuit_node_t> &circuit, const std::string &benchmark_file);
 
 
     /**

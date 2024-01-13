@@ -14,7 +14,7 @@ CircuitToBDD::CircuitToBDD(shared_ptr<ClassProject::ManagerInterface> BDD_manage
 
 CircuitToBDD::~CircuitToBDD() = default;
 
-void CircuitToBDD::GenerateBDD(const list_of_circuit_t &circuit, const std::string& benchmark_file) {
+void CircuitToBDD::GenerateBDD(const list_of_circuit_t &circuit, const std::string &benchmark_file) {
     ClassProject::BDD_ID BDD_node;
 
     std::filesystem::path pathToBenchFile(benchmark_file);
@@ -36,7 +36,7 @@ void CircuitToBDD::GenerateBDD(const list_of_circuit_t &circuit, const std::stri
 
     bdd_out_file << "BDD_ID,Bench Label" << std::endl;
 
-    for (const auto &circuit_node : circuit) {
+    for (const auto &circuit_node: circuit) {
         if (circuit_node.gate_type == INPUT_GATE_T) {
             BDD_node = InputGate(circuit_node.label);
         } else if (circuit_node.gate_type == NOT_GATE_T) {
@@ -214,7 +214,7 @@ void CircuitToBDD::PrintBDD(const std::set<label_t> &output_labels) {
         throw std::runtime_error("Unable to create directories 'txt' and 'dot' for the output!");
     }
 
-    for (const auto &output_label : output_labels) {
+    for (const auto &output_label: output_labels) {
 
         auto output_id_it = label_to_bdd_id.find(output_label);
 
@@ -267,10 +267,10 @@ void CircuitToBDD::dumpBddDot(std::ostream &out) {
     out << "{ rank = same; { node [style=invis]; \"T\" };\n";
     out << " { node [shape=box,fontsize=12]; \"0\"; }\n";
     out << "  { node [shape=box,fontsize=12]; \"1\"; }\n}\n";
-    for (const auto var : output_vars) {
+    for (const auto var: output_vars) {
         out << R"({ rank=same; { node [shape=plaintext,fontname="Times Italic",fontsize=12] ")"
             << bdd_manager->getTopVarName(var) << "\" };";
-        for (unsigned long node : output_nodes) {
+        for (unsigned long node: output_nodes) {
             if (bdd_manager->topVar(node) == var) {
                 out << "\"" << node << "\";";
             }
@@ -278,11 +278,11 @@ void CircuitToBDD::dumpBddDot(std::ostream &out) {
         out << "}\n";
     }
     out << "edge [style = invis]; {";
-    for (const auto var : output_vars) {
+    for (const auto var: output_vars) {
         out << "\"" << bdd_manager->getTopVarName(var) << "\" -> ";
     }
     out << "\"T\"; }\n";
-    for (const auto node : output_nodes) {
+    for (const auto node: output_nodes) {
         if (!bdd_manager->isConstant(node)) {
             out << "\"" << node << "\" -> \"" << bdd_manager->coFactorTrue(node)
                 << "\" [style=solid,arrowsize=\".75\"];\n";
