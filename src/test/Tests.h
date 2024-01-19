@@ -10,13 +10,15 @@
 
 #endif
 
-class Manager_test : public ClassProject::Manager, public ::testing::Test{
+class Manager_test : public ClassProject::Manager, public ::testing::Test {
 protected:
-    void SetUp() override{
+    void SetUp() override {
         test_var = new Manager;
     }
-    void TearDown() override{
+
+    void TearDown() override {
         delete test_var;
     }
-    Manager * test_var;
+
+    Manager *test_var;
 };
