@@ -14,13 +14,14 @@ namespace ClassProject {
         std::vector<BDD_ID> transitionFunctions;
         std::vector<bool> initState;
     public:
-        Reachability(unsigned int stateSize, unsigned int inputSize = 0);
 
-        //~Reachability(unsigned int stateSize, unsigned int inputSize) = default;
-
-        //const std::vector<BDD_ID> &getStates() override;
-
-       
-
+  Reachability(unsigned int stateSize, unsigned int inputSize = 0);
+  const std::vector<BDD_ID> &getStates() const override;
+  const std::vector<BDD_ID> &getInputs() const override;
+  bool isReachable(const std::vector<bool> &stateVector) override;
+  int stateDistance(const std::vector<bool> &stateVector) override;
+  void setTransitionFunctions(const std::vector<BDD_ID> &transitionFunctions) override;
+  void setInitState(const std::vector<bool> &stateVector) override;
+};
 }
 #endif
