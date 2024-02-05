@@ -1,0 +1,2 @@
+/usr/bin/ar qc libBenchmark.a CMakeFiles/Benchmark.dir/BenchParser.cpp.o CMakeFiles/Benchmark.dir/BenchmarkLib.cpp.o CMakeFiles/Benchmark.dir/CircuitToBDD.cpp.o
+/usr/bin/ranlib libBenchmark.a

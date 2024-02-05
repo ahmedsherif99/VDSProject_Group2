@@ -6,7 +6,6 @@
 #include <string>
 #include "Manager.h"
 
-
 int main(int argc, char *argv[]) {
     ClassProject::Manager manager;
 

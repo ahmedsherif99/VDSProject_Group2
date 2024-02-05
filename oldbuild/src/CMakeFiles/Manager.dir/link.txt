@@ -1,0 +1,2 @@
+/usr/bin/ar qc libManager.a CMakeFiles/Manager.dir/Manager.cpp.o
+/usr/bin/ranlib libManager.a
