@@ -10,10 +10,13 @@
 #include <unordered_map>
 #include <algorithm>
 
-namespace ClassProject {
+namespace ClassProject
+{
 
-    class Manager : public ManagerInterface {
-        struct unique_table_attr {
+    class Manager : public ManagerInterface
+    {
+        struct unique_table_attr
+        {
             BDD_ID id;
             BDD_ID topvariable;
             BDD_ID low;
@@ -21,18 +24,22 @@ namespace ClassProject {
             std::string label;
         };
 
-        struct key {
+        struct key
+        {
             BDD_ID first;
             BDD_ID second;
             BDD_ID third;
 
-            bool operator==(const key &compared) const {
+            bool operator==(const key &compared) const
+            {
                 return (first == compared.first && second == compared.second && third == compared.third);
             }
         };
 
-        struct keyhasherstruct { //custom hash struct function for the unordered_map hash calculation for the struct key
-            std::size_t operator()(const key &k) const {
+        struct keyhasherstruct
+        { // custom hash struct function for the unordered_map hash calculation for the struct key
+            std::size_t operator()(const key &k) const
+            {
                 std::size_t hashX = std::hash<BDD_ID>{}(k.first);
                 std::size_t hashY = std::hash<BDD_ID>{}(k.second);
                 std::size_t hashZ = std::hash<BDD_ID>{}(k.third);
@@ -46,6 +53,7 @@ namespace ClassProject {
         std::vector<unique_table_attr> unique_table;
         std::unordered_map<key, BDD_ID, keyhasherstruct> computed_table;
         std::unordered_map<key, BDD_ID, keyhasherstruct> unique_table_search;
+
     public:
         Manager();
 
@@ -99,6 +107,5 @@ namespace ClassProject {
     };
 
 }
-
 
 #endif

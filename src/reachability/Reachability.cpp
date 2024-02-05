@@ -149,7 +149,7 @@ int Reachability::stateDistance(const std::vector<bool> &stateVector)
         {
             imgs = and2(imgs, xnor2(stateVars[i], nextstateVars[i]));
         }
-        //visualizeBDD("Reachability.dot", imgs);
+        // visualizeBDD("Reachability.dot", imgs);
         for (int i = 0; i < stateVars.size(); i++)
         {
             imgs = or2(coFactorTrue(imgs, nextstateVars[i]), coFactorFalse(imgs, nextstateVars[i]));

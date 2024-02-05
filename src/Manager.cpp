@@ -2,12 +2,12 @@
 #include <iostream>
 #include <fstream>
 
-
 using namespace std;
 
 using namespace ClassProject;
 
-Manager::Manager() {
+Manager::Manager()
+{
     unique_table_attr false_row = {0, 0, 0, 0, "False"};
     unique_table_attr true_row = {1, 1, 1, 1, "True"};
     key false_key = {0, 0, 0};
@@ -19,7 +19,8 @@ Manager::Manager() {
     cout << "Constructor Instantiated" << endl;
 }
 
-BDD_ID Manager::createVar(const std::string &label) {
+BDD_ID Manager::createVar(const std::string &label)
+{
     unique_table_attr new_variable = {(unique_table.size()), (unique_table.size()), 0, 1, label};
     key variable_key = {unique_table.size(), 0, 1};
     unique_table_search.emplace(variable_key, unique_table.size());
@@ -27,49 +28,69 @@ BDD_ID Manager::createVar(const std::string &label) {
     return unique_table[unique_table.size() - 1].id;
 }
 
-const BDD_ID &Manager::False() {
+const BDD_ID &Manager::False()
+{
     return unique_table[0].id;
 }
 
-const BDD_ID &Manager::True() {
+const BDD_ID &Manager::True()
+{
     return unique_table[1].id;
 }
 
-bool Manager::isConstant(BDD_ID f) {
-    if (f == Manager::False() || f == Manager::True()) {
+bool Manager::isConstant(BDD_ID f)
+{
+    if (f == Manager::False() || f == Manager::True())
+    {
         return true;
-    } else {
+    }
+    else
+    {
         return false;
     }
 }
 
-bool Manager::isVariable(BDD_ID x) {
-    if (unique_table[x].high == Manager::True() && unique_table[x].low == Manager::False()) {
+bool Manager::isVariable(BDD_ID x)
+{
+    if (unique_table[x].high == Manager::True() && unique_table[x].low == Manager::False())
+    {
         return true;
-    } else {
+    }
+    else
+    {
         return false;
     }
 }
 
-BDD_ID Manager::topVar(BDD_ID f) {
+BDD_ID Manager::topVar(BDD_ID f)
+{
     return unique_table[f].topvariable;
 }
 
-BDD_ID Manager::ite(BDD_ID i, BDD_ID t, BDD_ID e) {
+BDD_ID Manager::ite(BDD_ID i, BDD_ID t, BDD_ID e)
+{
     // Terminal cases
-    if (i == Manager::True()) { //this is the true node
+    if (i == Manager::True())
+    { // this is the true node
         return t;
-    } else if (i == Manager::False()) { //this is the false node
+    }
+    else if (i == Manager::False())
+    { // this is the false node
         return e;
-    } else if (t == Manager::True() && e == Manager::False()) {
+    }
+    else if (t == Manager::True() && e == Manager::False())
+    {
         return i;
-    } else if (t == e) {
+    }
+    else if (t == e)
+    {
         return t;
     }
 
     // check if it precomputed before
     auto search_result = computed_table.find({i, t, e});
-    if (search_result != computed_table.end()) {
+    if (search_result != computed_table.end())
+    {
         return search_result->second;
     }
 
@@ -77,9 +98,12 @@ BDD_ID Manager::ite(BDD_ID i, BDD_ID t, BDD_ID e) {
     // find the top variable for ite
     vector<BDD_ID> topvariable = {topVar(i), topVar(t), topVar(e)};
     auto min_topvar = topVar(i) + topVar(t) + topVar(e);
-    for (int number = 0; number < 3; number++) {
-        if (!isConstant(topvariable[number])) {
-            if (topvariable[number] < min_topvar) {
+    for (int number = 0; number < 3; number++)
+    {
+        if (!isConstant(topvariable[number]))
+        {
+            if (topvariable[number] < min_topvar)
+            {
                 min_topvar = topvariable[number];
             }
         }
@@ -88,14 +112,16 @@ BDD_ID Manager::ite(BDD_ID i, BDD_ID t, BDD_ID e) {
                      coFactorTrue(e, unique_table[min_topvar].id));
     auto rlow = ite(coFactorFalse(i, unique_table[min_topvar].id), coFactorFalse(t, unique_table[min_topvar].id),
                     coFactorFalse(e, unique_table[min_topvar].id));
-    //possible reduction
-    if (rhigh == rlow) {
+    // possible reduction
+    if (rhigh == rlow)
+    {
         return rhigh;
     }
 
     // remove isomorphic graphs
     auto search_r = unique_table_search.find({unique_table[min_topvar].id, rlow, rhigh});
-    if (search_r != unique_table_search.end()) {
+    if (search_r != unique_table_search.end())
+    {
         return search_r->second;
     }
     string new_label = to_string(unique_table.size());
@@ -127,97 +153,128 @@ BDD_ID Manager::ite(BDD_ID i, BDD_ID t, BDD_ID e) {
     return unique_table[unique_table.size() - 1].id;
 }
 
-BDD_ID Manager::coFactorTrue(BDD_ID f, BDD_ID x) {
-    if (isConstant(f) || isConstant(x) || topVar(f) > x) {
+BDD_ID Manager::coFactorTrue(BDD_ID f, BDD_ID x)
+{
+    if (isConstant(f) || isConstant(x) || topVar(f) > x)
+    {
         return f;
     }
-    if (topVar(f) == x) {
+    if (topVar(f) == x)
+    {
         return unique_table[f].high;
-    } else {
+    }
+    else
+    {
         auto T = coFactorTrue(unique_table[f].high, x);
         auto F = coFactorTrue(unique_table[f].low, x);
         return ite(topVar(f), T, F);
     }
 }
 
-BDD_ID Manager::coFactorFalse(BDD_ID f, BDD_ID x) {
-    if (isConstant(f) || isConstant(x) || topVar(f) > x) {
+BDD_ID Manager::coFactorFalse(BDD_ID f, BDD_ID x)
+{
+    if (isConstant(f) || isConstant(x) || topVar(f) > x)
+    {
         return f;
     }
-    if (topVar(f) == x) {
+    if (topVar(f) == x)
+    {
         return unique_table[f].low;
-    } else {
+    }
+    else
+    {
         auto T = coFactorFalse(unique_table[f].high, x);
         auto F = coFactorFalse(unique_table[f].low, x);
         return ite(topVar(f), T, F);
     }
 }
 
-BDD_ID Manager::coFactorTrue(BDD_ID f) {
-    if (isConstant(f)) {
+BDD_ID Manager::coFactorTrue(BDD_ID f)
+{
+    if (isConstant(f))
+    {
         return f;
-    } else {
+    }
+    else
+    {
         return unique_table[f].high;
     }
 }
 
-BDD_ID Manager::coFactorFalse(BDD_ID f) {
-    if (isConstant(f)) {
+BDD_ID Manager::coFactorFalse(BDD_ID f)
+{
+    if (isConstant(f))
+    {
         return f;
-    } else {
+    }
+    else
+    {
         return unique_table[f].low;
     }
 }
 
-size_t Manager::uniqueTableSize() {
+size_t Manager::uniqueTableSize()
+{
     return unique_table.size();
 }
 
-BDD_ID Manager::and2(BDD_ID a, BDD_ID b) {
+BDD_ID Manager::and2(BDD_ID a, BDD_ID b)
+{
     return ite(a, b, 0);
 }
 
-BDD_ID Manager::or2(BDD_ID a, BDD_ID b) {
+BDD_ID Manager::or2(BDD_ID a, BDD_ID b)
+{
     return ite(a, 1, b);
 }
 
-BDD_ID Manager::xor2(BDD_ID a, BDD_ID b) {
+BDD_ID Manager::xor2(BDD_ID a, BDD_ID b)
+{
     return ite(a, neg(b), b);
 }
 
-BDD_ID Manager::neg(BDD_ID a) {
+BDD_ID Manager::neg(BDD_ID a)
+{
     return ite(a, 0, 1);
 }
 
-BDD_ID Manager::nand2(BDD_ID a, BDD_ID b) {
+BDD_ID Manager::nand2(BDD_ID a, BDD_ID b)
+{
     return neg(and2(a, b));
 }
 
-BDD_ID Manager::nor2(BDD_ID a, BDD_ID b) {
+BDD_ID Manager::nor2(BDD_ID a, BDD_ID b)
+{
     return neg(or2(a, b));
 }
 
-BDD_ID Manager::xnor2(BDD_ID a, BDD_ID b) {
+BDD_ID Manager::xnor2(BDD_ID a, BDD_ID b)
+{
     return neg(xor2(a, b));
 }
 
-std::string Manager::getTopVarName(const BDD_ID &root) {
+std::string Manager::getTopVarName(const BDD_ID &root)
+{
     auto topvarname = topVar(root);
     return unique_table[topvarname].label;
 }
 
-void Manager::findNodes(const BDD_ID &root, std::set<BDD_ID> &nodes_of_root) {
+void Manager::findNodes(const BDD_ID &root, std::set<BDD_ID> &nodes_of_root)
+{
     // TODO: Optimize when the same node is found twice or more (check result of .insert)
     nodes_of_root.insert(root);
-    if (isConstant(root)) {
+    if (isConstant(root))
+    {
         return;
     }
     findNodes(coFactorTrue(root), nodes_of_root);
     findNodes(coFactorFalse(root), nodes_of_root);
 }
 
-void Manager::findVars(const BDD_ID &root, std::set<BDD_ID> &vars_of_root) {
-    if (isConstant(root)) {
+void Manager::findVars(const BDD_ID &root, std::set<BDD_ID> &vars_of_root)
+{
+    if (isConstant(root))
+    {
         return;
     }
     vars_of_root.insert(topVar(root));
@@ -225,7 +282,8 @@ void Manager::findVars(const BDD_ID &root, std::set<BDD_ID> &vars_of_root) {
     findVars(coFactorFalse(root), vars_of_root);
 }
 
-void Manager::visualizeBDD(std::string filepath, BDD_ID &root) {
+void Manager::visualizeBDD(std::string filepath, BDD_ID &root)
+{
     std::ofstream file(filepath);
     file << "strict digraph A {\n";
     file << "graph [bgcolor=white]\n";
@@ -234,11 +292,13 @@ void Manager::visualizeBDD(std::string filepath, BDD_ID &root) {
     file << "}\n";
 }
 
-void Manager::visualizeBDDrecursive(std::ofstream &file, BDD_ID &root) {
+void Manager::visualizeBDDrecursive(std::ofstream &file, BDD_ID &root)
+{
     auto &node = unique_table[root];
 
     file << node.id << " [label=\"" << node.label << "\"]\n";
-    if (isConstant(root)) return;
+    if (isConstant(root))
+        return;
 
     visualizeBDDrecursive(file, node.low);
     file << node.id << " -> " << node.low << " [style=dotted]\n";

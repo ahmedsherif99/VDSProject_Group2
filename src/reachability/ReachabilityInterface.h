@@ -8,11 +8,12 @@
 
 #include "../Manager.h"
 
-namespace ClassProject {
-    class ReachabilityInterface : public Manager {
+namespace ClassProject
+{
+    class ReachabilityInterface : public Manager
+    {
     public:
-
-        //ReachabilityInterface() = delete;
+        // ReachabilityInterface() = delete;
         virtual ~ReachabilityInterface() = default;
 
         /**
@@ -26,7 +27,7 @@ namespace ClassProject {
          * @param inputSize number of boolean input bits, defaults to zero
          * @throws std::runtime_error if stateSize is zero
          */
-        //explicit ReachabilityInterface(unsigned int stateSize, unsigned int inputSize) {};
+        // explicit ReachabilityInterface(unsigned int stateSize, unsigned int inputSize) {};
 
         /**
          * Returns a vector containing all state bits of the state machine.
@@ -52,28 +53,28 @@ namespace ClassProject {
          */
         virtual bool isReachable(const std::vector<bool> &stateVector) = 0;
 
-         /**
-          * This function computes the distance from the initial state to a specified state.
-          * i.e., minimum cycles it takes the FSM to transition to the specified state
-          * Example: Initial state s0 = 0; s1 = 0
-          *          Transition functions: s0' = !s1; s1' = s0
-          *          FSM transitions:
-          *             {False, False}
-          *             {True, False}
-          *             {True, True}
-          *             {False, True}
-          *             {False, False}
-          *             ...
-          *          stateDistance return values:
-          *             {False, False} -> 0
-          *             {True, False}  -> 1
-          *             {True, True}   -> 2
-          *             {False, True}  -> 3
-          *             {False, False} -> 0
-          * @param stateVector provides the assignment for each state bit
-          * @return the shortest distance to the initial state, -1 if unreachable
-	  * @throws std::runtime_error if size does not match with number of state bits
-          */
+        /**
+         * This function computes the distance from the initial state to a specified state.
+         * i.e., minimum cycles it takes the FSM to transition to the specified state
+         * Example: Initial state s0 = 0; s1 = 0
+         *          Transition functions: s0' = !s1; s1' = s0
+         *          FSM transitions:
+         *             {False, False}
+         *             {True, False}
+         *             {True, True}
+         *             {False, True}
+         *             {False, False}
+         *             ...
+         *          stateDistance return values:
+         *             {False, False} -> 0
+         *             {True, False}  -> 1
+         *             {True, True}   -> 2
+         *             {False, True}  -> 3
+         *             {False, False} -> 0
+         * @param stateVector provides the assignment for each state bit
+         * @return the shortest distance to the initial state, -1 if unreachable
+         * @throws std::runtime_error if size does not match with number of state bits
+         */
         virtual int stateDistance(const std::vector<bool> &stateVector) = 0;
 
         /**
@@ -102,10 +103,7 @@ namespace ClassProject {
          * @throws std::runtime_error if size does not match with number of state bits
          */
         virtual void setInitState(const std::vector<bool> &stateVector) = 0;
-
     };
 }
 
-
 #endif
-
