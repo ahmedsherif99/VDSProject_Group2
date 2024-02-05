@@ -1,0 +1,92 @@
+[
+{
+  "directory": "/VDSProject_Group2/build",
+  "command": "/usr/bin/c++  -I/VDSProject_Group2/lib -I/VDSProject_Group2/src -I/VDSProject_Group2/src/test -I/VDSProject_Group2/src/bench -I/VDSProject_Group2/src/verify -I/VDSProject_Group2/src/reachability  -fPIC -std=c++17   -g --coverage -g -o CMakeFiles/VDSProject.dir/src/main.cpp.o -c /VDSProject_Group2/src/main.cpp",
+  "file": "/VDSProject_Group2/src/main.cpp",
+  "output": "CMakeFiles/VDSProject.dir/src/main.cpp.o"
+},
+{
+  "directory": "/VDSProject_Group2/gtest/googletest-build/googlemock",
+  "command": "/usr/bin/c++  -I/VDSProject_Group2/gtest/googletest-src/googlemock/include -I/VDSProject_Group2/gtest/googletest-src/googlemock -isystem /VDSProject_Group2/gtest/googletest-src/googletest/include -isystem /VDSProject_Group2/gtest/googletest-src/googletest  -fPIC -std=c++17   -g --coverage -g -Wall -Wshadow -Wundef -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=1 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -o CMakeFiles/gmock.dir/src/gmock-all.cc.o -c /VDSProject_Group2/gtest/googletest-src/googlemock/src/gmock-all.cc",
+  "file": "/VDSProject_Group2/gtest/googletest-src/googlemock/src/gmock-all.cc",
+  "output": "/VDSProject_Group2/gtest/googletest-build/googlemock/CMakeFiles/gmock.dir/src/gmock-all.cc.o"
+},
+{
+  "directory": "/VDSProject_Group2/gtest/googletest-build/googlemock",
+  "command": "/usr/bin/c++  -isystem /VDSProject_Group2/gtest/googletest-src/googlemock/include -isystem /VDSProject_Group2/gtest/googletest-src/googlemock -isystem /VDSProject_Group2/gtest/googletest-src/googletest/include -isystem /VDSProject_Group2/gtest/googletest-src/googletest  -fPIC -std=c++17   -g --coverage -g -Wall -Wshadow -Wundef -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=1 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -o CMakeFiles/gmock_main.dir/src/gmock_main.cc.o -c /VDSProject_Group2/gtest/googletest-src/googlemock/src/gmock_main.cc",
+  "file": "/VDSProject_Group2/gtest/googletest-src/googlemock/src/gmock_main.cc",
+  "output": "/VDSProject_Group2/gtest/googletest-build/googlemock/CMakeFiles/gmock_main.dir/src/gmock_main.cc.o"
+},
+{
+  "directory": "/VDSProject_Group2/gtest/googletest-build/googletest",
+  "command": "/usr/bin/c++  -I/VDSProject_Group2/gtest/googletest-src/googletest/include -I/VDSProject_Group2/gtest/googletest-src/googletest  -fPIC -std=c++17   -g --coverage -g -Wall -Wshadow -Wundef -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=1 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -o CMakeFiles/gtest.dir/src/gtest-all.cc.o -c /VDSProject_Group2/gtest/googletest-src/googletest/src/gtest-all.cc",
+  "file": "/VDSProject_Group2/gtest/googletest-src/googletest/src/gtest-all.cc",
+  "output": "/VDSProject_Group2/gtest/googletest-build/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.o"
+},
+{
+  "directory": "/VDSProject_Group2/gtest/googletest-build/googletest",
+  "command": "/usr/bin/c++  -isystem /VDSProject_Group2/gtest/googletest-src/googletest/include -isystem /VDSProject_Group2/gtest/googletest-src/googletest  -fPIC -std=c++17   -g --coverage -g -Wall -Wshadow -Wundef -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=1 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -o CMakeFiles/gtest_main.dir/src/gtest_main.cc.o -c /VDSProject_Group2/gtest/googletest-src/googletest/src/gtest_main.cc",
+  "file": "/VDSProject_Group2/gtest/googletest-src/googletest/src/gtest_main.cc",
+  "output": "/VDSProject_Group2/gtest/googletest-build/googletest/CMakeFiles/gtest_main.dir/src/gtest_main.cc.o"
+},
+{
+  "directory": "/VDSProject_Group2/build/src",
+  "command": "/usr/bin/c++  -I/VDSProject_Group2/lib -I/VDSProject_Group2/src -I/VDSProject_Group2/src/test -I/VDSProject_Group2/src/bench -I/VDSProject_Group2/src/verify -I/VDSProject_Group2/src/reachability  -fPIC -std=c++17   -g --coverage -g -o CMakeFiles/Manager.dir/Manager.cpp.o -c /VDSProject_Group2/src/Manager.cpp",
+  "file": "/VDSProject_Group2/src/Manager.cpp",
+  "output": "src/CMakeFiles/Manager.dir/Manager.cpp.o"
+},
+{
+  "directory": "/VDSProject_Group2/build/src/test",
+  "command": "/usr/bin/c++  -I/VDSProject_Group2/lib -I/VDSProject_Group2/src -I/VDSProject_Group2/src/test -I/VDSProject_Group2/src/bench -I/VDSProject_Group2/src/verify -I/VDSProject_Group2/src/reachability -isystem /VDSProject_Group2/gtest/googletest-src/googletest/include -isystem /VDSProject_Group2/gtest/googletest-src/googletest  -fPIC -std=c++17   -g --coverage -g -o CMakeFiles/VDSProject_test.dir/main_test.cpp.o -c /VDSProject_Group2/src/test/main_test.cpp",
+  "file": "/VDSProject_Group2/src/test/main_test.cpp",
+  "output": "src/test/CMakeFiles/VDSProject_test.dir/main_test.cpp.o"
+},
+{
+  "directory": "/VDSProject_Group2/build/src/test",
+  "command": "/usr/bin/c++  -I/VDSProject_Group2/lib -I/VDSProject_Group2/src -I/VDSProject_Group2/src/test -I/VDSProject_Group2/src/bench -I/VDSProject_Group2/src/verify -I/VDSProject_Group2/src/reachability -isystem /VDSProject_Group2/gtest/googletest-src/googletest/include -isystem /VDSProject_Group2/gtest/googletest-src/googletest  -fPIC -std=c++17   -g --coverage -g -o CMakeFiles/VDSProject_test.dir/Tests.cpp.o -c /VDSProject_Group2/src/test/Tests.cpp",
+  "file": "/VDSProject_Group2/src/test/Tests.cpp",
+  "output": "src/test/CMakeFiles/VDSProject_test.dir/Tests.cpp.o"
+},
+{
+  "directory": "/VDSProject_Group2/build/src/bench",
+  "command": "/usr/bin/c++  -I/VDSProject_Group2/lib -I/VDSProject_Group2/src -I/VDSProject_Group2/src/test -I/VDSProject_Group2/src/bench -I/VDSProject_Group2/src/verify -I/VDSProject_Group2/src/reachability  -fPIC -std=c++17   -g --coverage -g -o CMakeFiles/Benchmark.dir/BenchParser.cpp.o -c /VDSProject_Group2/src/bench/BenchParser.cpp",
+  "file": "/VDSProject_Group2/src/bench/BenchParser.cpp",
+  "output": "src/bench/CMakeFiles/Benchmark.dir/BenchParser.cpp.o"
+},
+{
+  "directory": "/VDSProject_Group2/build/src/bench",
+  "command": "/usr/bin/c++  -I/VDSProject_Group2/lib -I/VDSProject_Group2/src -I/VDSProject_Group2/src/test -I/VDSProject_Group2/src/bench -I/VDSProject_Group2/src/verify -I/VDSProject_Group2/src/reachability  -fPIC -std=c++17   -g --coverage -g -o CMakeFiles/Benchmark.dir/BenchmarkLib.cpp.o -c /VDSProject_Group2/src/bench/BenchmarkLib.cpp",
+  "file": "/VDSProject_Group2/src/bench/BenchmarkLib.cpp",
+  "output": "src/bench/CMakeFiles/Benchmark.dir/BenchmarkLib.cpp.o"
+},
+{
+  "directory": "/VDSProject_Group2/build/src/bench",
+  "command": "/usr/bin/c++  -I/VDSProject_Group2/lib -I/VDSProject_Group2/src -I/VDSProject_Group2/src/test -I/VDSProject_Group2/src/bench -I/VDSProject_Group2/src/verify -I/VDSProject_Group2/src/reachability  -fPIC -std=c++17   -g --coverage -g -o CMakeFiles/Benchmark.dir/CircuitToBDD.cpp.o -c /VDSProject_Group2/src/bench/CircuitToBDD.cpp",
+  "file": "/VDSProject_Group2/src/bench/CircuitToBDD.cpp",
+  "output": "src/bench/CMakeFiles/Benchmark.dir/CircuitToBDD.cpp.o"
+},
+{
+  "directory": "/VDSProject_Group2/build/src/bench",
+  "command": "/usr/bin/c++  -I/VDSProject_Group2/lib -I/VDSProject_Group2/src -I/VDSProject_Group2/src/test -I/VDSProject_Group2/src/bench -I/VDSProject_Group2/src/verify -I/VDSProject_Group2/src/reachability  -fPIC -std=c++17   -g --coverage -g -o CMakeFiles/VDSProject_bench.dir/main_bench.cpp.o -c /VDSProject_Group2/src/bench/main_bench.cpp",
+  "file": "/VDSProject_Group2/src/bench/main_bench.cpp",
+  "output": "src/bench/CMakeFiles/VDSProject_bench.dir/main_bench.cpp.o"
+},
+{
+  "directory": "/VDSProject_Group2/build/src/verify",
+  "command": "/usr/bin/c++  -I/VDSProject_Group2/lib -I/VDSProject_Group2/src -I/VDSProject_Group2/src/test -I/VDSProject_Group2/src/bench -I/VDSProject_Group2/src/verify -I/VDSProject_Group2/src/reachability  -fPIC -std=c++17   -g --coverage -g -o CMakeFiles/VDSProject_verify.dir/main_verify.cpp.o -c /VDSProject_Group2/src/verify/main_verify.cpp",
+  "file": "/VDSProject_Group2/src/verify/main_verify.cpp",
+  "output": "src/verify/CMakeFiles/VDSProject_verify.dir/main_verify.cpp.o"
+},
+{
+  "directory": "/VDSProject_Group2/build/src/reachability",
+  "command": "/usr/bin/c++  -I/VDSProject_Group2/lib -I/VDSProject_Group2/src -I/VDSProject_Group2/src/test -I/VDSProject_Group2/src/bench -I/VDSProject_Group2/src/verify -I/VDSProject_Group2/src/reachability -isystem /VDSProject_Group2/gtest/googletest-src/googletest/include -isystem /VDSProject_Group2/gtest/googletest-src/googletest  -fPIC -std=c++17   -g --coverage -g -o CMakeFiles/VDSProject_reachability.dir/main_test.cpp.o -c /VDSProject_Group2/src/reachability/main_test.cpp",
+  "file": "/VDSProject_Group2/src/reachability/main_test.cpp",
+  "output": "src/reachability/CMakeFiles/VDSProject_reachability.dir/main_test.cpp.o"
+},
+{
+  "directory": "/VDSProject_Group2/build/src/reachability",
+  "command": "/usr/bin/c++  -I/VDSProject_Group2/lib -I/VDSProject_Group2/src -I/VDSProject_Group2/src/test -I/VDSProject_Group2/src/bench -I/VDSProject_Group2/src/verify -I/VDSProject_Group2/src/reachability -isystem /VDSProject_Group2/gtest/googletest-src/googletest/include -isystem /VDSProject_Group2/gtest/googletest-src/googletest  -fPIC -std=c++17   -g --coverage -g -o CMakeFiles/VDSProject_reachability.dir/Reachability.cpp.o -c /VDSProject_Group2/src/reachability/Reachability.cpp",
+  "file": "/VDSProject_Group2/src/reachability/Reachability.cpp",
+  "output": "src/reachability/CMakeFiles/VDSProject_reachability.dir/Reachability.cpp.o"
+}
+]
