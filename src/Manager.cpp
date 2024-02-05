@@ -207,6 +207,7 @@ std::string Manager::getTopVarName(const BDD_ID &root) {
 }
 
 void Manager::findNodes(const BDD_ID &root, std::set<BDD_ID> &nodes_of_root) {
+    // TODO: Optimize when the same node is found twice or more (check result of .insert)
     nodes_of_root.insert(root);
     if (isConstant(root)) {
         return;

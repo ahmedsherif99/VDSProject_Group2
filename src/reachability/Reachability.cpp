@@ -41,9 +41,9 @@ Reachability::Reachability(unsigned int stateSize, unsigned int inputSize)
         inputVars[i] = createVar("i" + to_string(i));
         cout<< inputVars[i]<<endl;
     }
-    for (unsigned int i = 0; i < stateSize + inputSize; i++)
+    for (unsigned int i = 0; i < stateSize; i++)
     {
-        initState.push_back(false);
+        initState.push_back(False());
     }
     cout << "Reachability Constructor Instantiated" << endl;
 }
@@ -68,14 +68,14 @@ bool Reachability::isReachable(const std::vector<bool> &stateVector)
         cout << "Crit: " << Crit << endl;
         Cr = Crit;
         auto imgsdash = and2(Cr, taw);
-        for (int i = 0; i < inputVars.size(); i++)
+        for (unsigned long inputVar : inputVars)
         {
-            imgsdash = or2(coFactorTrue(imgsdash, inputVars[i]), coFactorFalse(imgsdash, inputVars[i]));
+            imgsdash = or2(coFactorTrue(imgsdash, inputVar), coFactorFalse(imgsdash, inputVar));
         }
 
-        for (int i = 0; i < stateVars.size(); i++)
+        for (unsigned long stateVar : stateVars)
         {
-            imgsdash = or2(coFactorTrue(imgsdash, stateVars[i]), coFactorFalse(imgsdash, stateVars[i]));
+            imgsdash = or2(coFactorTrue(imgsdash, stateVar), coFactorFalse(imgsdash, stateVar));
         }
 
         auto imgs = imgsdash;
@@ -137,7 +137,7 @@ void Reachability::setTransitionFunctions(const std::vector<BDD_ID> &transitionF
 }
 void Reachability::setInitState(const std::vector<bool> &stateVector)
 {
-    if (initState.size() != stateVars.size()+inputVars.size())
+    if (initState.size() != stateVars.size())
     {
         throw std::runtime_error("size does not match with number of state bits");
     }
@@ -148,4 +148,9 @@ void Reachability::setInitState(const std::vector<bool> &stateVector)
     {
         Cs = and2(Cs, xnor2(stateVars[i], initState[i]));
     }
+   /*
+    for (int i = 0; i < inputVars.size(); i++)
+    {
+        Cs = and2(Cs, xnor2(inputVars[i], initState[i + stateVars.size()]));
+    }*/
 }
