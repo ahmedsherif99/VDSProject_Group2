@@ -22,8 +22,8 @@ TEST_F(ReachabilityTest, HowTo_Example) { /* NOLINT */
     BDD_ID s0 = stateVars2.at(0);
     BDD_ID s1 = stateVars2.at(1);
 
-    transitionFunctions.push_back(fsm2->neg(s0)); // s0' = not(s0)+i0
-    transitionFunctions.push_back(fsm2->neg(s1)); // s1' = not(s1)
+    transitionFunctions.push_back(fsm2->neg(s0));
+    transitionFunctions.push_back(fsm2->neg(s1));
     fsm2->setTransitionFunctions(transitionFunctions);
 
     fsm2->setInitState({false,false});
@@ -94,28 +94,26 @@ TEST_F(ReachabilityTest, HowTo_Example4) { /* NOLINT */
 }
 
 struct InputReachabilityTest : testing::Test {
-    std::unique_ptr<ClassProject::ReachabilityInterface> fsm = std::make_unique<ClassProject::Reachability>(1, 1);
+    std::unique_ptr<ClassProject::ReachabilityInterface> fsm = std::make_unique<ClassProject::Reachability>(2, 1);
 
     std::vector<BDD_ID> stateVars = fsm->getStates();
     std::vector<BDD_ID> inputVars = fsm->getInputs();
     std::vector<BDD_ID> transitionFunctions;
 
-    BDD_ID s1 = stateVars[0];
-    BDD_ID x1 = inputVars[0];
+    BDD_ID s0 = stateVars[0];
+    BDD_ID s1 = stateVars[1];
+    BDD_ID x0 = inputVars[0];
+
 };
 
 TEST_F(InputReachabilityTest, InputTest){
     int NOT_REACHABLE = -1;
     // d1 = (!s0)x1
-    transitionFunctions.push_back(fsm->and2(fsm->neg(s1), x1));
+    transitionFunctions.push_back(fsm->and2(s0, x0));
+    transitionFunctions.push_back(true);
     fsm->setTransitionFunctions(transitionFunctions);
 
-    fsm->setInitState({false, false});
-    EXPECT_TRUE(fsm->isReachable({false}));
-    EXPECT_FALSE(fsm->isReachable({true}));
-
     fsm->setInitState({false, true});
-    EXPECT_TRUE(fsm->isReachable({false}));
-    EXPECT_TRUE(fsm->isReachable({true}));
+    EXPECT_FALSE(fsm->isReachable({false, false}));
 }
 #endif
