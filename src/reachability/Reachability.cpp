@@ -8,7 +8,8 @@ using namespace ClassProject;
 
 Reachability::Reachability(unsigned int stateSize, unsigned int inputSize)
 {
-    if (stateSize == 0) {
+    if (stateSize == 0)
+    {
         throw std::runtime_error("stateSize is zero");
     }
 
@@ -65,16 +66,37 @@ bool Reachability::isReachable(const std::vector<bool> &stateVector)
     {
         throw std::runtime_error("size does not match with number of state bits");
     }
-    
-    if(taw==False()&&Cs==False()){
+
+    if (Cs == False())
+    {
         bool cornercasetemp;
-        for(int i=0;i<stateVector.size();i++){
-            if(stateVector[i]){
-                cornercasetemp= false;
+        for (int i = 0; i < stateVector.size(); i++)
+        {
+            if (stateVector[i])
+            {
+                cornercasetemp = false;
                 return cornercasetemp;
             }
-            else{
-                cornercasetemp= true;
+            else
+            {
+                cornercasetemp = true;
+            }
+        }
+        return cornercasetemp;
+    }
+    if (taw == False())
+    {
+        bool cornercasetemp;
+        for (int i = 0; i < stateVector.size(); i++)
+        {
+            if (stateVector[i] != initState[i])
+            {
+                cornercasetemp = false;
+                return cornercasetemp;
+            }
+            else
+            {
+                cornercasetemp = true;
             }
         }
         return cornercasetemp;
@@ -84,7 +106,6 @@ bool Reachability::isReachable(const std::vector<bool> &stateVector)
     auto Cr = Crit;
     do
     {
-        cout << "Crit: " << Crit << endl;
         Cr = Crit;
         auto imgsdash = and2(Cr, taw);
         for (unsigned long inputVar : inputVars)
@@ -103,14 +124,11 @@ bool Reachability::isReachable(const std::vector<bool> &stateVector)
         {
             imgs = and2(imgs, xnor2(stateVars[i], nextstateVars[i]));
         }
-        visualizeBDD("Reachability.dot", imgs);
         for (int i = 0; i < stateVars.size(); i++)
         {
             imgs = or2(coFactorTrue(imgs, nextstateVars[i]), coFactorFalse(imgs, nextstateVars[i]));
         }
         Crit = or2(Cr, imgs);
-
-        cout << "Cr: " << Cr << endl;
     } while (Cr != Crit);
 
     // change stateVector given bu the user to a specific BDD_IDD value based on the states
@@ -149,7 +167,6 @@ int Reachability::stateDistance(const std::vector<bool> &stateVector)
 
     do
     {
-        cout << "Crit: " << Crit << endl;
         Cr = Crit;
         auto imgsdash = and2(Cr, taw);
         for (unsigned long inputVar : inputVars)
@@ -168,7 +185,6 @@ int Reachability::stateDistance(const std::vector<bool> &stateVector)
         {
             imgs = and2(imgs, xnor2(stateVars[i], nextstateVars[i]));
         }
-        // visualizeBDD("Reachability.dot", imgs);
         for (int i = 0; i < stateVars.size(); i++)
         {
             imgs = or2(coFactorTrue(imgs, nextstateVars[i]), coFactorFalse(imgs, nextstateVars[i]));
@@ -180,8 +196,6 @@ int Reachability::stateDistance(const std::vector<bool> &stateVector)
             return stateDistancevar;
         }
         Crit = or2(Cr, imgs);
-
-        cout << "Cr: " << Cr << endl;
     } while (Cr != Crit);
 
     return -1;
@@ -201,7 +215,7 @@ void Reachability::setTransitionFunctions(const std::vector<BDD_ID> &transitionF
             throw std::runtime_error("Unkown ID");
         }
     }
-    taw=True();
+    taw = True();
     // transition relation
     for (int i = 0; i < stateVars.size(); i++)
     {
@@ -217,7 +231,7 @@ void Reachability::setInitState(const std::vector<bool> &stateVector)
 
     // change init state from default to given state
     initState = stateVector;
-    Cs=True();
+    Cs = True();
     for (int i = 0; i < stateVars.size(); i++)
     {
         Cs = and2(Cs, xnor2(stateVars[i], initState[i]));
