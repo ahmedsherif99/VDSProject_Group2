@@ -8,6 +8,10 @@ using namespace ClassProject;
 
 Reachability::Reachability(unsigned int stateSize, unsigned int inputSize)
 {
+    if (stateSize == 0) {
+        throw std::runtime_error("stateSize is zero");
+    }
+
     for (unsigned int i = 0; i < stateSize; i++)
     {
         stateVars.push_back(0);

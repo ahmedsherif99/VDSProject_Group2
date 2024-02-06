@@ -17,8 +17,83 @@ struct ReachabilityTest : testing::Test
     std::vector<BDD_ID> transitionFunctions;
 };
 
+
+//=======================Runtime error tests=========================
+
+TEST_F(ReachabilityTest, ConstructorRuntimeErrorTest) {
+    // throws std::runtime_error if stateSize is zero
+    EXPECT_THROW(std::make_unique<ClassProject::Reachability>(0, 0), std::runtime_error);
+    EXPECT_THROW(std::make_unique<ClassProject::Reachability>(0, 1), std::runtime_error);
+}
+
+TEST_F(ReachabilityTest, isReachableRuntimeErrorTest) {
+
+    BDD_ID s0 = stateVars2.at(0);
+    BDD_ID s1 = stateVars2.at(1);
+    // throws std::runtime_error if size does not match with number of state bits
+    transitionFunctions.push_back(s0); 
+    transitionFunctions.push_back(s1);
+    fsm2->setTransitionFunctions(transitionFunctions);
+    fsm2->setInitState({false, false});
+
+    // test for one missing state
+    EXPECT_THROW(fsm2->isReachable({false}), std::runtime_error);
+    // test for one additional state
+    EXPECT_THROW(fsm2->isReachable({false, false, false}), std::runtime_error);
+}
+
+TEST_F(ReachabilityTest, stateDistanceRuntimeErrorTest) {
+
+    BDD_ID s0 = stateVars2.at(0);
+    BDD_ID s1 = stateVars2.at(1);
+    // throws std::runtime_error if size does not match with number of state bits
+    transitionFunctions.push_back(s0);
+    transitionFunctions.push_back(s1);
+    fsm2->setTransitionFunctions(transitionFunctions);
+    fsm2->setInitState({false, false});
+    // test for one missing state
+    EXPECT_THROW(fsm2->stateDistance({false}), std::runtime_error);
+    // test for one additional state
+    EXPECT_THROW(fsm2->stateDistance({false, false, false}), std::runtime_error);
+}
+
+TEST_F(ReachabilityTest, TransistionRuntimeErrorTest) {
+
+    BDD_ID s0 = stateVars2.at(0);
+    BDD_ID s1 = stateVars2.at(1);
+    // throws std::runtime_error if size does not match the number of state bits
+    transitionFunctions.push_back(s0);
+    EXPECT_THROW(fsm2->setTransitionFunctions(transitionFunctions), std::runtime_error);
+    // test invalid BDD_ID
+    transitionFunctions.push_back((BDD_ID) 9999);
+    EXPECT_THROW(fsm2->setTransitionFunctions(transitionFunctions), std::runtime_error);
+    transitionFunctions.pop_back();
+
+    // test for one additional transition function
+    transitionFunctions.push_back(s1);
+    transitionFunctions.push_back(s1);
+    EXPECT_THROW(fsm2->setTransitionFunctions(transitionFunctions), std::runtime_error);
+}
+
+TEST_F(ReachabilityTest, setInitialStateRuntimeErrorTest){
+
+    BDD_ID s0 = stateVars2.at(0);
+    BDD_ID s1 = stateVars2.at(1);
+    // throws std::runtime_error if size does not match with number of state bits
+    transitionFunctions.push_back(s0);
+    transitionFunctions.push_back(s1);
+    fsm2->setTransitionFunctions(transitionFunctions);
+
+    // test for one missing initial state
+    EXPECT_THROW(fsm2->setInitState({false}), std::runtime_error);
+    // test for one additional initial state
+    EXPECT_THROW(fsm2->setInitState({false, false, false}), std::runtime_error);
+}
+
+//=========================Reachability tests=========================
+
 TEST_F(ReachabilityTest, HowTo_Example)
-{ /* NOLINT */
+{
 
     BDD_ID s0 = stateVars2.at(0);
     BDD_ID s1 = stateVars2.at(1);
@@ -36,7 +111,7 @@ TEST_F(ReachabilityTest, HowTo_Example)
 }
 
 TEST_F(ReachabilityTest, HowTo_Example2)
-{ /* NOLINT */
+{
 
     BDD_ID s0 = stateVars2.at(0);
     BDD_ID s1 = stateVars2.at(1);
@@ -56,7 +131,7 @@ TEST_F(ReachabilityTest, HowTo_Example2)
 }
 
 TEST_F(ReachabilityTest, HowTo_Example3)
-{ /* NOLINT */
+{
 
     BDD_ID s0 = stateVars2.at(0);
     BDD_ID s1 = stateVars2.at(1);
@@ -72,6 +147,8 @@ TEST_F(ReachabilityTest, HowTo_Example3)
     ASSERT_TRUE(fsm2->isReachable({true, false}));
     ASSERT_TRUE(fsm2->isReachable({true, true}));
 }
+
+//=========================Reachability with inputs tests=========================
 
 struct InputReachabilityTest : testing::Test
 {
@@ -92,7 +169,7 @@ TEST_F(InputReachabilityTest, InputTest)
     transitionFunctions.push_back(fsm->and2(s0, i0));
     transitionFunctions.push_back(true);
     fsm->setTransitionFunctions(transitionFunctions);
-
+    // start from state 01
     fsm->setInitState({false, true});
     EXPECT_FALSE(fsm->isReachable({false, false}));
 }
@@ -102,7 +179,7 @@ TEST_F(InputReachabilityTest, InputTest2)
     transitionFunctions.push_back(fsm->and2(s0, i0));
     transitionFunctions.push_back(true);
     fsm->setTransitionFunctions(transitionFunctions);
-
+    // start from state 00
     fsm->setInitState({false, false});
     EXPECT_TRUE(fsm->isReachable({false, true}));
     EXPECT_TRUE(fsm->isReachable({false, false}));
@@ -110,20 +187,22 @@ TEST_F(InputReachabilityTest, InputTest2)
     EXPECT_FALSE(fsm->isReachable({true, true}));
 }
 
+//=========================State distance tests=========================
+
 struct distanceReachabilityTest : testing::Test
 {
 
-    std::unique_ptr<ClassProject::ReachabilityInterface> fsm2 = std::make_unique<ClassProject::Reachability>(2, 2);
+    std::unique_ptr<ClassProject::ReachabilityInterface> fsm2 = std::make_unique<ClassProject::Reachability>(2, 1);
     std::unique_ptr<ClassProject::ReachabilityInterface> fsm3 = std::make_unique<ClassProject::Reachability>(3);
 
     std::vector<BDD_ID> stateVars2 = fsm2->getStates();
-    std::vector<BDD_ID> inputVars2 = fsm2->getInputs();
+    std::vector<BDD_ID> inputVars = fsm2->getInputs();
     std::vector<BDD_ID> stateVars3 = fsm3->getStates();
     std::vector<BDD_ID> transitionFunctions;
 };
 
 TEST_F(distanceReachabilityTest, distance1)
-{ /* NOLINT */
+{
 
     BDD_ID s0 = stateVars2.at(0);
     BDD_ID s1 = stateVars2.at(1);
@@ -141,12 +220,28 @@ TEST_F(distanceReachabilityTest, distance1)
 }
 
 TEST_F(distanceReachabilityTest, distance2)
-{ /* NOLINT */
+{
+    BDD_ID s0 = stateVars2.at(0);
+    BDD_ID s1 = stateVars2.at(1);
+
+    transitionFunctions.push_back(fsm2->neg(s1));
+    transitionFunctions.push_back(s0);
+    fsm2->setTransitionFunctions(transitionFunctions);
+    
+    fsm2->setInitState({false, false});
+
+    EXPECT_EQ(fsm2->stateDistance({false, false}), 0);
+    EXPECT_EQ(fsm2->stateDistance({true, false}), 1);
+    EXPECT_EQ(fsm2->stateDistance({true, true}), 2);
+    EXPECT_EQ(fsm2->stateDistance({false, true}), 3);
+}
+
+TEST_F(distanceReachabilityTest, distance3)
+{
 
     BDD_ID s0 = stateVars2.at(0);
     BDD_ID s1 = stateVars2.at(1);
-    BDD_ID i0 = inputVars2.at(0);
-    BDD_ID i1 = inputVars2.at(1);
+    BDD_ID i0 = inputVars.at(0);
 
     transitionFunctions.push_back(fsm2->or2(fsm2->neg(s0), i0)); // s0' = not(s0)+i0
     transitionFunctions.push_back(fsm2->neg(s1));                // s1' = not(s1) 1 0
@@ -160,8 +255,8 @@ TEST_F(distanceReachabilityTest, distance2)
     EXPECT_EQ(fsm2->stateDistance({false, true}), 3);
 }
 
-TEST_F(distanceReachabilityTest, distance3)
-{ /* NOLINT */
+TEST_F(distanceReachabilityTest, distance4)
+{
 
     BDD_ID s0 = stateVars2.at(0);
     BDD_ID s1 = stateVars2.at(1);
@@ -178,8 +273,8 @@ TEST_F(distanceReachabilityTest, distance3)
     EXPECT_EQ(fsm2->stateDistance({true, true}), 3);
 }
 
-TEST_F(distanceReachabilityTest, distance4)
-{ /* NOLINT */
+TEST_F(distanceReachabilityTest, distance5)
+{
 
     BDD_ID s0 = stateVars3.at(0);
     BDD_ID s1 = stateVars3.at(1);
@@ -202,19 +297,5 @@ TEST_F(distanceReachabilityTest, distance4)
     EXPECT_EQ(fsm3->stateDistance({true, true, true}), 7);
 }
 
-TEST_F(distanceReachabilityTest, distance5)
-{
-    BDD_ID s0 = stateVars2.at(0);
-    BDD_ID s1 = stateVars2.at(1);
-    // test if computed distance between states matches
-    transitionFunctions.push_back(fsm2->neg(s1));
-    transitionFunctions.push_back(s0);
-    fsm2->setTransitionFunctions(transitionFunctions);
-    fsm2->setInitState({false, false});
 
-    EXPECT_EQ(fsm2->stateDistance({false, false}), 0);
-    EXPECT_EQ(fsm2->stateDistance({true, false}), 1);
-    EXPECT_EQ(fsm2->stateDistance({true, true}), 2);
-    EXPECT_EQ(fsm2->stateDistance({false, true}), 3);
-}
 #endif
