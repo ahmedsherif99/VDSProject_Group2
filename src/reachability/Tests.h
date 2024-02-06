@@ -148,6 +148,23 @@ TEST_F(ReachabilityTest, HowTo_Example3)
     ASSERT_TRUE(fsm2->isReachable({true, true}));
 }
 
+TEST_F(ReachabilityTest, HowTo_Example4)
+{
+
+    BDD_ID s0 = stateVars2.at(0);
+    BDD_ID s1 = stateVars2.at(1);
+
+    transitionFunctions.push_back(fsm2->neg(s0));
+    transitionFunctions.push_back(fsm2->neg(s1));
+    //fsm2->setTransitionFunctions(transitionFunctions);
+
+    //fsm2->setInitState({false, false});
+
+    ASSERT_TRUE(fsm2->isReachable({false, false}));
+    ASSERT_FALSE(fsm2->isReachable({false, true}));
+    ASSERT_FALSE(fsm2->isReachable({true, false}));
+    ASSERT_FALSE(fsm2->isReachable({true, true}));
+}
 //=========================Reachability with inputs tests=========================
 
 struct InputReachabilityTest : testing::Test

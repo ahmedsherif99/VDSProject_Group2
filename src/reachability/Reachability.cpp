@@ -65,6 +65,21 @@ bool Reachability::isReachable(const std::vector<bool> &stateVector)
     {
         throw std::runtime_error("size does not match with number of state bits");
     }
+    
+    if(taw==False()&&Cs==False()){
+        bool cornercasetemp;
+        for(int i=0;i<stateVector.size();i++){
+            if(stateVector[i]){
+                cornercasetemp= false;
+                return cornercasetemp;
+            }
+            else{
+                cornercasetemp= true;
+            }
+        }
+        return cornercasetemp;
+    }
+
     auto Crit = Cs;
     auto Cr = Crit;
     do
