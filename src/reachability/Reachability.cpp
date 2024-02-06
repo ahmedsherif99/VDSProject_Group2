@@ -186,7 +186,7 @@ void Reachability::setTransitionFunctions(const std::vector<BDD_ID> &transitionF
             throw std::runtime_error("Unkown ID");
         }
     }
-
+    taw=True();
     // transition relation
     for (int i = 0; i < stateVars.size(); i++)
     {
@@ -202,6 +202,7 @@ void Reachability::setInitState(const std::vector<bool> &stateVector)
 
     // change init state from default to given state
     initState = stateVector;
+    Cs=True();
     for (int i = 0; i < stateVars.size(); i++)
     {
         Cs = and2(Cs, xnor2(stateVars[i], initState[i]));
