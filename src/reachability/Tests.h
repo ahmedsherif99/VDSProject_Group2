@@ -169,6 +169,42 @@ TEST_F(ReachabilityTest, HowTo_Example4)
     ASSERT_FALSE(fsm2->isReachable({true, false}));
     ASSERT_FALSE(fsm2->isReachable({true, true}));
 }
+
+TEST_F(ReachabilityTest, HowTo_Example5)
+{
+
+    BDD_ID s0 = stateVars2.at(0);
+    BDD_ID s1 = stateVars2.at(1);
+
+    transitionFunctions.push_back(fsm2->neg(s0));
+    transitionFunctions.push_back(fsm2->neg(s1));
+    fsm2->setTransitionFunctions(transitionFunctions);
+
+    // fsm2->setInitState({true, false});
+
+    ASSERT_TRUE(fsm2->isReachable({false, false}));
+    ASSERT_FALSE(fsm2->isReachable({false, true}));
+    ASSERT_FALSE(fsm2->isReachable({true, false}));
+    ASSERT_TRUE(fsm2->isReachable({true, true}));
+}
+
+TEST_F(ReachabilityTest, HowTo_Example6)
+{
+
+    BDD_ID s0 = stateVars2.at(0);
+    BDD_ID s1 = stateVars2.at(1);
+
+    transitionFunctions.push_back(fsm2->neg(s0));
+    transitionFunctions.push_back(fsm2->neg(s1));
+    // fsm2->setTransitionFunctions(transitionFunctions);
+
+    fsm2->setInitState({true, false});
+
+    ASSERT_FALSE(fsm2->isReachable({false, false}));
+    ASSERT_FALSE(fsm2->isReachable({false, true}));
+    ASSERT_TRUE(fsm2->isReachable({true, false}));
+    ASSERT_FALSE(fsm2->isReachable({true, true}));
+}
 //=========================Reachability with inputs tests=========================
 
 struct InputReachabilityTest : testing::Test
@@ -316,6 +352,61 @@ TEST_F(distanceReachabilityTest, distance5)
     EXPECT_EQ(fsm3->stateDistance({true, false, true}), 5);
     EXPECT_EQ(fsm3->stateDistance({true, true, false}), 6);
     EXPECT_EQ(fsm3->stateDistance({true, true, true}), 7);
+}
+
+TEST_F(distanceReachabilityTest, distance6)
+{
+
+    BDD_ID s0 = stateVars2.at(0);
+    BDD_ID s1 = stateVars2.at(1);
+
+    transitionFunctions.push_back(fsm2->xor2(s0, s1));
+    transitionFunctions.push_back(fsm2->neg(s1));
+    //fsm2->setTransitionFunctions(transitionFunctions);
+
+    //fsm2->setInitState({false, false});
+
+    EXPECT_EQ(fsm2->stateDistance({false, false}), 0);
+    EXPECT_EQ(fsm2->stateDistance({false, true}), -1);
+    EXPECT_EQ(fsm2->stateDistance({true, false}), -1);
+    EXPECT_EQ(fsm2->stateDistance({true, true}), -1);
+}
+
+
+TEST_F(distanceReachabilityTest, distance7)
+{
+
+    BDD_ID s0 = stateVars2.at(0);
+    BDD_ID s1 = stateVars2.at(1);
+
+    transitionFunctions.push_back(fsm2->xor2(s0, s1));
+    transitionFunctions.push_back(fsm2->neg(s1));
+    fsm2->setTransitionFunctions(transitionFunctions);
+
+    //fsm2->setInitState({false, false});
+
+    EXPECT_EQ(fsm2->stateDistance({false, false}), 0);
+    EXPECT_EQ(fsm2->stateDistance({false, true}), 1);
+    EXPECT_EQ(fsm2->stateDistance({true, false}), 2);
+    EXPECT_EQ(fsm2->stateDistance({true, true}), 3);
+}
+
+TEST_F(distanceReachabilityTest, distance8)
+{
+
+    BDD_ID s0 = stateVars2.at(0);
+    BDD_ID s1 = stateVars2.at(1);
+
+    transitionFunctions.push_back(fsm2->xor2(s0, s1));
+    transitionFunctions.push_back(fsm2->neg(s1));
+    //fsm2->setTransitionFunctions(transitionFunctions);
+
+    fsm2->setInitState({false, false});
+
+    EXPECT_EQ(fsm2->stateDistance({false, false}), 0);
+    EXPECT_EQ(fsm2->stateDistance({false, true}), -1);
+    EXPECT_EQ(fsm2->stateDistance({true, false}), -1);
+    EXPECT_EQ(fsm2->stateDistance({true, true}), -1);
 }
 
 TEST(Group2_Test, distanceExample)
