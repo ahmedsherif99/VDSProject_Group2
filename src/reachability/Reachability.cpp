@@ -150,7 +150,7 @@ int Reachability::stateDistance(const std::vector<bool> &stateVector)
         throw std::runtime_error("size does not match with number of state bits");
     }
 
-if (Cs == False()&& taw != False())
+    if (Cs == False() && taw != False())
     {
         /*
         bool cornercasetemp;
@@ -171,7 +171,7 @@ if (Cs == False()&& taw != False())
     }
     else if (taw == False())
     {
-        
+
         for (int i = 0; i < stateVector.size(); i++)
         {
             if (stateVector[i] != initState[i])
